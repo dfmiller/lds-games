@@ -7,99 +7,161 @@
 	<link rel="stylesheet" type="text/css" href="./global.css">
 	<style>
 
+		html,
 		body {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
+			width: 100%;
+			height: auto;
+			min-height: 100vh;
+			overflow-x: hidden;
+			overflow-y: auto;
+			background: #f3f4f6;
 		}
 
 		@supports (height: 100dvh) {
 			body {
-				height: 100dvh;
+				min-height: 100dvh;
 			}
 		}
 
 		.game-books {
 			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			align-content: flex-start;
-			justify-content: center;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			position: relative;
+			z-index: 1;
+			box-sizing: border-box;
+			width: 100%;
+			min-height: 100vh;
+			height: auto;
+			padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem);
+			background: #f3f4f6;
+		}
+
+		.home-title {
 			position: relative;
 			z-index: 1;
 			flex: none;
-			width: min(100vw, calc(100vh * 4 / 7));
-			height: min(100vh, calc(100vw * 7 / 4));
-			aspect-ratio: 4 / 7;
-			overflow: hidden;
+			margin: 0;
+			color: #202938;
+			font-size: clamp(2rem, 4vw, 3rem);
+			letter-spacing: -.04em;
 		}
 
-		.game-books span,
-		.game-books a {
-			display: inline-block;
-			box-sizing: border-box;
-			width: 30%;
-			aspect-ratio: 3 / 4;
-			margin: 1%;
-			padding: 1%;
-			text-align: center;
-			vertical-align: middle;
-			font-size: .8rem;
-			text-decoration: none;
-			color: black;
-			text-shadow: 0 0 1px #888;
+		.home-subtitle {
+			margin: .35rem 0 1.75rem;
+			color: #687386;
+			font-size: 1rem;
+		}
+
+		.game-card-grid {
 			position: relative;
-		}
-
-		@supports (height: 100dvh) {
-			.game-books {
-				width: min(100vw, calc(100dvh * 4 / 7));
-				height: min(100dvh, calc(100vw * 7 / 4));
-			}
+			z-index: 1;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+			gap: clamp(.75rem, 2vw, 1.5rem);
 		}
 
 		.game-books a {
-			background: #ddd;
-			box-shadow: 2px 2px 6px black;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			justify-content: flex-end;
+			box-sizing: border-box;
+			min-width: 0;
+			aspect-ratio: 3 / 4;
+			padding: clamp(1rem, 2vw, 1.5rem);
+			text-decoration: none;
+			color: white;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+			position: relative;
+			isolation: isolate;
+			overflow: hidden;
+			border-radius: 1rem;
+			background: #263243;
+			box-shadow: 0 8px 20px rgba(31, 41, 55, .16);
+			transition: transform .18s ease, box-shadow .18s ease;
 		}
 
-		.game-books a * {
-			xposition: relative;
+		.game-books a:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 14px 28px rgba(31, 41, 55, .22);
+		}
+
+		.game-books a:focus-visible {
+			outline: 3px solid #5865d8;
+			outline-offset: 3px;
+		}
+
+		.game-books a::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			background: linear-gradient(180deg, rgba(12, 18, 30, .2) 20%, rgba(12, 18, 30, .85) 100%);
 		}
 
 		.game-books a img {
-			xposition: absolute;
-			top: 0; left: 0; bottom: 0; right: 0;
-		}
-
-		.game-books span {
-			font-weight: bold;
-			text-shadow: 1px 1px 3px white;
-		}
-
-		.game-books:after {
-			content: '';
-			background: url(./temples/nZe5RQmY_o.jpg);
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			opacity: 0.5;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
 			position: absolute;
-			z-index: -1;
+			inset: 0;
+			z-index: -2;
+			width: 100%;
+			height: 100%;
+			max-width: none;
+			max-height: none;
+			object-fit: cover;
+			transition: transform .25s ease;
+		}
+
+		.game-books a:hover img {
+			transform: scale(1.04);
+		}
+
+		.game-card-type {
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+			font-size: .7rem;
+			font-weight: 700;
+			letter-spacing: .12em;
+		}
+
+		.game-books a strong {
+			font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+			line-height: 1.15;
+		}
+
+		.game-card-description {
+			margin-top: .4rem;
+			font-size: .9rem;
+			line-height: 1.4;
+			color: rgba(255, 255, 255, .88);
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.game-books a,
+			.game-books a img {
+				transition: none;
+			}
 		}
 
 		.game-frame {
-			position: absolute;
-			inset: 0;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 			z-index: 2;
 			display: flex;
 			flex-direction: column;
+			width: min(100vw, calc(100vh * 4 / 7));
+			height: min(100vh, calc(100vw * 7 / 4));
 			background: #eee;
+		}
+
+		@supports (height: 100dvh) {
+			.game-frame {
+				width: min(100vw, calc(100dvh * 4 / 7));
+				height: min(100dvh, calc(100vw * 7 / 4));
+			}
 		}
 
 		.game-frame[hidden] {
@@ -141,34 +203,52 @@
 </head>
 <body>
 	<main class="layout-full game-books">
+		<h1 class="home-title">LDS Games</h1>
+		<p class="home-subtitle">Games, puzzles, and more</p>
+		<div class="game-card-grid">
 		<a href="./wordSearch/index.html" data-title="Word Search">
 			<img src="./wordSearch/icon.png" />
+			<span class="game-card-type">GAME</span>
 			<strong>Word Search</strong>
+			<span class="game-card-description">Find hidden words in themed puzzles</span>
 		</a>
 		<a href="./quest/index.html" data-title="Pioneer Quest">
 			<img src="./quest/quest.jpg" />
+			<span class="game-card-type">GAME</span>
 			<strong>Pioneer Quest</strong>
+			<span class="game-card-description">Explore stories of the pioneers</span>
 		</a>
 		<a href="./photoPuzzle/index.html" data-title="Photo Puzzles">
 			<img src="./photoPuzzle/icon.png" />
+			<span class="game-card-type">GAME</span>
 			<strong>Photo Puzzles</strong>
+			<span class="game-card-description">Rebuild photos one piece at a time</span>
 		</a>
 		<a href="./crossword/crossword.html" data-title="Gospel Crossword">
 			<img src="./crossword/crossword.jpg" />
+			<span class="game-card-type">GAME</span>
 			<strong>Gospel Crossword</strong>
+			<span class="game-card-description">Test your knowledge with crosswords</span>
 		</a>
 		<a href="./scramble/letter-scramble.html" data-title="Letter Scramble">
 			<img src="./scramble/letter-scramble.jpg" />
+			<span class="game-card-type">GAME</span>
 			<strong>Letter Scramble</strong>
+			<span class="game-card-description">Unscramble words and phrases</span>
 		</a>
 		<a href="./scriptureBooks/standard_works.html" data-title="Scripture Books">
 			<img src="./scriptureBooks/books.png" />
+			<span class="game-card-type">GAME</span>
 			<strong>Scripture Books</strong>
+			<span class="game-card-description">Learn the books of scripture</span>
 		</a>
 		<a href="./jigsaws/jigsaws.html" data-title="Jigsaws">
 			<img src="./jigsaws/jigsaws.png" />
+			<span class="game-card-type">GAME</span>
 			<strong>Jigsaws</strong>
+			<span class="game-card-description">Piece together temple scenes</span>
 		</a>
+		</div>
 		<!-- <a href="./blanks/blanks.html">
 			<img src="./blanks/blanks.jpg" />
 			<strong>Fill in the Blanks</strong>
