@@ -101,8 +101,6 @@ function addPhoto(path, tooltip, before) {
 
 			initImage: function() {
 
-                //showInterstitialFunc()
-
 				var puzzle = document.querySelector('.selected')
 				if (puzzle == null) {
 					puzzle = document.querySelector('#imageGrid img')
@@ -800,29 +798,6 @@ function addPhoto(path, tooltip, before) {
 				ctx.restore();
 			}
 		},
-
-
-        getPhoto: function(sourceType) {
-		// 0: library, 1: camera
-		    navigator.camera && navigator.camera.getPicture && navigator.camera.getPicture(
-			    function(src) {
-                    addPhoto(src, null, true)
-				    //alert(src)
-				    //$('.settingsDialog').attr('open', true)
-				    //PhotoPuzzle.createSource(src, true, 'my_photos')
-			    },
-			    function(error) {
-				    alert(error);
-			    },
-			    {
-				    sourceType: sourceType,
-				    targetWidth: 768,
-				    targetHeight: 1024,
-                    correctOrientation: true,
-			    }
-		    )
-	    }
-
 
 	};
 	window.js = js;

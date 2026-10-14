@@ -7,10 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="./global.css">
 	<style>
 
-		.askRate {
-			z-index: 1000;
-		}
-
 		body {
 			display: flex;
 			justify-content: center;
@@ -204,9 +200,6 @@
 		</form>
 	</dialog>
 
-	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="adMobPlus.js"></script>
-
 	<script>
 
         window.oncontextmenu = function() { return false }
@@ -233,19 +226,6 @@
 			gameFrameContent.src = 'about:blank'
 			if (activeGameLink) activeGameLink.focus()
 		})
-
-		// var puzzlesCompleted = (localStorage.getItem('puzzlesCompleted') || 0)
-		// localStorage.setItem('puzzlesCompleted', ++puzzlesCompleted)
-		//
-		// if (puzzlesCompleted === 5) {
-		// 	setTimeout(function() {
-		// 		document.getElementsByClassName('askRate')[0].setAttribute('open', true).show()
-		// 	}, 500)
-		// }
-		//
-		// document.getElementsByClassName('skip')[0].addEventListener('click', function() {
-		// 	document.getElementsByClassName('askRate')[0].removeAttribute('open').hide()
-		// })
 
 	</script>
 

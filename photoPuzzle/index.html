@@ -578,12 +578,14 @@
 					<label>Select Photo</label>
 					<span class="dashed snapPhoto">
 						<img src="camera.jpg"/>
-						snap a photo
+						take a photo
 					</span>
 					<span class="dashed pickPhoto">
 						<img src="pict.jpg"/>
 						pick a photo
 					</span>
+					<input class="snapPhotoInput" type="file" accept="image/*" capture="environment" hidden />
+					<input class="pickPhotoInput" type="file" accept="image/*" hidden />
 				</div>
 
 				<ul class="tabs"></ul>
@@ -615,22 +617,6 @@
 		</form>
 	</dialog>
 
-
-	<dialog class="askRate">
-		<form>
-			<header></header>
-			<main>
-				<p>If you are enjoying the Photo Puzzles, would you mind taking a moment to rate it?</p>
-				<p>Thanks for your support!</p>
-			</main>
-			<footer>
-				<button type="button" class="skip">No, thanks</button>
-				<button type="button" tabindex="1" class="rateItNow"><a href="https://play.google.com/store/apps/details?id=com.digitalfunmedia.ldsgames" target="_blank">Rate it Now</a></button>
-			</footer>
-		</form>
-	</dialog>
-
-
 	<script type="text/javascript">
 
 	/*
@@ -647,51 +633,9 @@
 </script>
 
 <script src="../jquery-3.4.1.min.js"></script>
-<script src="../cordova.js"></script>
 <script src="../temples/photos.js"></script>
 <script src="https://lds-photo-puzzle.s3-us-west-1.amazonaws.com/remote.js"></script>
 <script src="./photo-puzzle.js"></script>
 
-<script>
-
-var app = {
-	// Application Constructor
-	initialize: function() {
-		document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-		this.timeout = setTimeout(this.onDeviceReady.bind(this), 5000)
-	},
-
-	onDeviceReady: function() {
-		clearTimeout(this.timeout)
-
-		if (window.plugins && window.plugins.intent) {
-			window.plugins.intent.getCordovaIntent(app.intentHandler)
-			window.plugins.intent.setNewIntentHandler(app.intentHandler)
-		}
-
-		//initAdMob()
-		//showBannerFunc()
-	},
-
-	intentHandler: function(Intent) {
-		if (Intent.clipItems) {
-			//alert(JSON.stringify(Intent))
-			Intent.clipItems.forEach(function(clipItem) {
-				//alert(clipItem.uri)
-				//if (clipItem.type === 'image/jpeg' || clipItem.type === 'image/png') {
-				$('.settingsDialog').attr('open', true)
-				PhotoPuzzle.createSource(clipItem.uri, true, 'myphotos')
-				//}
-			})
-		}
-	}
-
-
-}
-
-app.initialize();
-
-
-</script>
 </body>
 </html>

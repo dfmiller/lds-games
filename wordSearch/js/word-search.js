@@ -138,31 +138,6 @@ if (useLocalStorage) {
 }
 
 
-var app = {
-	initialize: function() {
-		document.addEventListener('deviceready', this.onDeviceReady, false);
-	},
-
-	onDeviceReady: function() {
-		app.receivedEvent('deviceready');
-	},
-
-	receivedEvent: function(id) {
-		try {
-			if (window.plugins) {
-				window.plugins.insomnia.keepAwake()
-			}
-
-			initAdMob()
-		} catch(e) {
-			//alert(e)
-		}
-	}
-}
-
-app.initialize();
-
-
 function init() {
 
 	//localStorage.clear();
@@ -1176,14 +1151,8 @@ function init() {
 
 							setTimeout(function() {
 
-								var delay = 5000;
+								var delay = 1000
 								loading.show();
-
-								try {
-									showInterstitialFunc()
-								} catch(e) {
-									var delay = 1000;
-								}
 
 								setTimeout(function() {
 									loading.hide();

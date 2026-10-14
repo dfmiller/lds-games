@@ -480,23 +480,7 @@ const PhotoPuzzle = {
 						$('.thumbs span').removeClass('selected')
 						$('.thumbs span:nth-child('+(PhotoPuzzle.srcIndexes[PhotoPuzzle.folder]+1)+')').addClass('selected')[0].scrollIntoView()
 
-						var puzzlesCompleted = (localStorage.getItem('puzzlesCompleted') || 0)
-						localStorage.setItem('puzzlesCompleted', ++puzzlesCompleted)
-
-						if (puzzlesCompleted === 5) {
-							setTimeout(function() {
-								$('.askRate').attr('open', true).show()
-							}, 500)
-						}
-
 						var delay = 1000;
-
-						try {
-							showInterstitialFunc()
-							delay = 2000
-						} catch(e) {
-							//alert(e)
-						}
 
 						setTimeout(function() {
 							$('.settingsDialog').attr('open', true)
@@ -516,11 +500,23 @@ const PhotoPuzzle = {
 		})
 
 		$('.snapPhoto').click(function() {
-			PhotoPuzzle.getPhoto(1)
+			$('.snapPhotoInput').trigger('click')
 		})
 
 		$('.pickPhoto').click(function() {
-			PhotoPuzzle.getPhoto(0)
+			$('.pickPhotoInput').trigger('click')
+		})
+
+		$('.snapPhotoInput, .pickPhotoInput').change(function() {
+			var file = this.files[0]
+			if (!file) return
+
+			var reader = new FileReader()
+			reader.onload = function() {
+				PhotoPuzzle.createSource(reader.result, true, 'my_photos')
+			}
+			reader.readAsDataURL(file)
+			this.value = ''
 		})
 
 		$('.preview').click(function() {
@@ -569,32 +565,6 @@ const PhotoPuzzle = {
 
 	},
 
-
-	getPhoto: function(sourceType) {
-		// 0: library, 1: camera
-		navigator.camera && navigator.camera.getPicture && navigator.camera.getPicture(
-			function(src) {
-				//alert(src)
-				$('.settingsDialog').attr('open', true)
-				PhotoPuzzle.createSource(src, true, 'my_photos')
-			},
-			function(error) {
-				alert(error);
-			},
-			{
-				sourceType: sourceType,
-				targetWidth: 1024,
-				targetHeight: 1024
-			}
-		)
-	}
-
-
 }
-
-$('.askRate .skip').click(function() {
-	$('.askRate').attr('open', false).hide()
-})
-
 
 PhotoPuzzle.init()
