@@ -38,10 +38,8 @@ html, body {
 	line-height: 1em;
 }
 
-
 .flex-row { display: flex; flex-direction: row; }
 .space-between { justify-content: space-between; }
-
 
 .game-board {
 	margin: 0;
@@ -69,10 +67,6 @@ html, body {
 	margin: .2em;
 	min-height: 1em;
 }
-
-.filler {
-}
-
 
 .drop-target {
 	display: inline-block;
@@ -107,7 +101,6 @@ html, body {
 
 .correct {
 	color: black;
-	oxutline: 2px solid blue
 }
 
 #draggable {
@@ -121,7 +114,7 @@ html, body {
 header {
  font-size: 1.5rem;
  background: lightblue;
-	padding: 10px 15px;
+ padding: 0px 15px;
  line-height: 2em;
 }
 

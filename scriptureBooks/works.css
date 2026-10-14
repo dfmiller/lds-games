@@ -1,7 +1,6 @@
 
 * {
 	user-select: none;
- cbox-sizing: border-box;
 }
 
 
@@ -22,7 +21,6 @@ html, body {
 .text-center {
     text-align: center;
 }
-
 
 .game_wrapper {
 	width: 100%;
@@ -50,7 +48,7 @@ html, body {
 	font-size: 1.5rem;
 	background: blue;
 	color: white;
-	padding: 10px 15px;
+	padding: 0px 15px;
 	line-height: 2em;
 	display: flex;
 	flex-direction: row;

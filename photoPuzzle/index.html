@@ -18,10 +18,6 @@
 		background: #000;
 	}
 
-	/* layout */
-
-	/* { outline: 1px solid orange; outline-offset: -1px; } /* */
-
 	.main {
 		display: flex;
 		flex-direction: column;
@@ -68,7 +64,7 @@
 	.navigation {
 		display: flex;
 		align-items: center;
-		padding: .25em;
+		padding: 0;
 		box-sizing: border-box;
 		white-space: nowrap;
 		padding-right: 1em;
@@ -445,7 +441,7 @@
 	<main class="main">
 		<nav id="controls" class="navigation">
 			<button type="button" class="newGame menu-icon"></button>
-			<header id="logo">Photo Puzzles</header>
+			<header id="logo"></header>
 			<div class="spacer"></div>
 			<div>Best: <span id="high_score">0</span></div>
 		</nav>
