@@ -264,15 +264,6 @@
 		padding: 2vw;
 	}
 
-	.thumbs > div:empty:after {
-		content: 'select an option above to add a photo';
-		font-size: 1em;
-		grid-column: 1/5;
-		text-align: center;
-		line-height: 6em;
-		width: 85vw;
-	}
-
 	.thumbs div span {
 		display: inline-block;
 		background: #000;
@@ -461,28 +452,6 @@
 		padding: .2em;
 	}
 
-	.tabs {
-		padding: 0;
-		position: relative;
-		display: flex;
-		overflow: auto;
-		flex: 0 0 2.25em;
-	}
-
-	.tabs li {
-		display: inline-block;
-		list-style: none;
-		margin: 0 1px 1px;
-		padding: .5em 1em;
-		text-transform: uppercase;
-		white-space: nowrap;
-	}
-
-	.tabs li.selected {
-		background: #ccc;
-		border-bottom: 2px solid blue;
-	}
-
 	@keyframes pulsing {
 		from { outline-color: #0f8; }
 		to { outline-color: #00f; }
@@ -573,22 +542,6 @@
 			<!-- header>Select Photo to Begin</header -->
 			<header>New Game Settings</header>
 			<main>
-
-				<div class="form-row">
-					<label>Select Photo</label>
-					<span class="dashed snapPhoto">
-						<img src="camera.jpg"/>
-						take a photo
-					</span>
-					<span class="dashed pickPhoto">
-						<img src="pict.jpg"/>
-						pick a photo
-					</span>
-					<input class="snapPhotoInput" type="file" accept="image/*" capture="environment" hidden />
-					<input class="pickPhotoInput" type="file" accept="image/*" hidden />
-				</div>
-
-				<ul class="tabs"></ul>
 
 				<div class="thumbs"></div>
 

@@ -6,21 +6,10 @@ const PhotoPuzzle = {
 	/* from local storage */
 	games_completed: 0,
 
-	folders: {
-		temples: Object.keys(local.temples),
-		historic: Object.keys(local.historic),
-		my_photos: JSON.parse(localStorage.getItem('my_photos') || '[]')
-	},
-
-	names: {
-        temples: local.temples,
-        historic: local.historic,
-        my_photos: {}
-    },
+	photos: Object.keys(local.temples),
+	names: local.temples,
 
 	srcIndexes: JSON.parse(localStorage.getItem('srcIndexes') || '{}'),
-
-	folder: localStorage.getItem('folder') || 'temples',
 
 	gridSizes: [3,4,5,6,7,8,9],
 	gridSize: localStorage.getItem('gridSize') || 5,
@@ -45,11 +34,11 @@ const PhotoPuzzle = {
 		}
 		$('#high_score').text(this.high_score)
 		$('#score').text(this.score)
-		this.initTabs()
 		this.initSizes()
 		this.initSources()
 
-		var selected = this.srcIndexes[this.folder]+1
+		this.srcIndexes.temples = this.srcIndexes.temples || 0
+		var selected = this.srcIndexes.temples + 1
 
 		$('.thumbs span:nth-child('+selected+')').addClass('selected')
 
@@ -63,29 +52,6 @@ const PhotoPuzzle = {
 	},
 
 
-	initTabs: function() {
-		$('.tabs').empty()
-		Object.keys(this.folders).forEach(function(folder) {
-			$('.tabs').append(
-				$('<li class="tab-'+folder+' '+(folder === PhotoPuzzle.folder ? 'selected' : '')+'">'+folder.replace(/_/g, ' ')+'</li>').click(function() {
-					var tab = this
-					return (function() {
-						$('.tabs li').removeClass('selected')
-						$(tab).addClass('selected')
-						PhotoPuzzle.folder = folder
-						PhotoPuzzle.initSources()
-					})()
-				})
-			)
-			$('.thumbs').append(
-				$('<div />').addClass('folder-' + folder).hide()
-			)
-			PhotoPuzzle.srcIndexes[folder] = PhotoPuzzle.srcIndexes[folder] || 0
-		})
-		//$('.tabs').append('<li>+</li>')
-	},
-
-
 	initSizes: function() {
 		this.gridSizes.forEach(function(gridSize) {
 			$('.gridSizes').append(
@@ -96,94 +62,45 @@ const PhotoPuzzle = {
 
 
 	initSources: function() {
-		$('.tabs li').removeClass('selected')
-		$('.tab-'+PhotoPuzzle.folder).addClass('selected')
-		$('.thumbs > div').hide()
-		$('.thumbs .folder-'+PhotoPuzzle.folder).show()
-		if ($('.thumbs .folder-'+PhotoPuzzle.folder).is(':empty')) {
-			this.folders[this.folder].forEach(function(src) {
-				PhotoPuzzle.createSource(src, false, PhotoPuzzle.folder)
-			})
-		}
+		$('.thumbs').empty().append($('<div />').addClass('folder-temples'))
+		this.photos.forEach(function(src) {
+			PhotoPuzzle.createSource(src)
+		})
 	},
 
 
-	createSource: function(src, select, folder) {
+	createSource: function(src) {
         var fullSrc = src
 		if (src.slice(0, 4) == 'aws/') {
 			fullSrc = src.replace('aws/', PhotoPuzzle.remotePath)
 		}
 
-		if (select) {
-			var my_photos = JSON.parse(localStorage.getItem('my_photos') || '[]')
-			my_photos.push(src)
-			localStorage.setItem('my_photos', JSON.stringify(my_photos))
-		}
-
-		if (folder !== PhotoPuzzle.folder) {
-			PhotoPuzzle.folder = folder
-			PhotoPuzzle.initSources()
-		}
-
 		//add span
 		var source = $('<span/>').append(
 			$('<img/>').attr('src', fullSrc).contextmenu(function() {
-				event.preventDefault()
-				return (function() {
-					if (PhotoPuzzle.folder !== 'gallery') {
-						if (confirm('Remove this Photo?')) {
-							PhotoPuzzle.folders[PhotoPuzzle.folder] = PhotoPuzzle.folders[PhotoPuzzle.folder].filter(function(s) {
-								return s !== src
-							})
-							source.empty().remove()
-							var my_photos = JSON.parse(localStorage.getItem('my_photos') || '[]')
-							my_photos.splice(my_photos.indexOf(src), 1)
-							localStorage.setItem('my_photos', JSON.stringify(my_photos))
-						}
+					event.preventDefault()
+					if (confirm('Remove this Photo?')) {
+						PhotoPuzzle.photos = PhotoPuzzle.photos.filter(function(s) {
+							return s !== src
+						})
+						source.empty().remove()
 					}
-				})()
+					return false
 			})
-		).addClass(select ? 'selected' : '').click(function() {
+		).click(function() {
 			$('.thumbs span').removeClass('selected')
 			$(this).addClass('selected')
 			return (function() {
-				PhotoPuzzle.srcIndexes[PhotoPuzzle.folder] = PhotoPuzzle.folders[PhotoPuzzle.folder].indexOf(src) || 0
-				//$('.settingsDialog form').submit()
+				PhotoPuzzle.srcIndexes.temples = PhotoPuzzle.photos.indexOf(src) || 0
 
 				localStorage.setItem('srcIndexes', JSON.stringify(PhotoPuzzle.srcIndexes))
 
 			})()
 		})
-		$('.thumbs .folder-'+PhotoPuzzle.folder).append(source)
+		$('.thumbs .folder-temples').append(source)
 
 		var img = new Image
-		$(img).on('load', function() {
-			// if (this.width > 1024 || this.height > 1024 || this.width < 768 || this.height < 768) {
-			// 	try {
-			// 		var index = PhotoPuzzle.folders[PhotoPuzzle.folder].indexOf(src)
-			// 		var oc = document.createElement('canvas')
-			// 		var octx = oc.getContext('2d');
-			// 		if (img.width > img.height) {
-			// 			oc.height = 1024
-			// 			oc.width = 1024 * (img.width / img.height)
-			// 		} else {
-			// 			oc.width = 1024
-			// 			oc.height = 1024 * (img.height / img.width)
-			// 		}
-			// 		octx.drawImage(img, 0, 0, oc.width, oc.height)
-			// 		src = oc.toDataURL('image/jpeg', .5)
-			// 		PhotoPuzzle.folders[PhotoPuzzle.folder][index] = src
-			// 	} catch(e) { console.log(e) }
-			// }
-			if (select) {
-				PhotoPuzzle.folders[PhotoPuzzle.folder].push(src)
-				PhotoPuzzle.srcIndexes[PhotoPuzzle.folder] = PhotoPuzzle.folders[PhotoPuzzle.folder].indexOf(src) || 0
-				$('.thumbs span').removeClass('selected')
-				source.addClass('selected')
-				source[0].scrollIntoView()
-				localStorage.setItem('srcIndexes', JSON.stringify(PhotoPuzzle.srcIndexes))
-			}
-		}).on('error', function() {
+		$(img).on('error', function() {
 			source.remove()
 			//$(source).find('img')[0].src = './broken.jpg'
 		})
@@ -200,7 +117,6 @@ const PhotoPuzzle = {
 
 		$('.playButton').click(function() {
 			PhotoPuzzle.level = $('.pickLevel').val() * 1
-            localStorage.setItem('folder', PhotoPuzzle.folder),
 			localStorage.setItem('photoGame', PhotoPuzzle.level)
 			localStorage.setItem('squares', '[]')
 			localStorage.setItem('score', 0)
@@ -264,11 +180,11 @@ const PhotoPuzzle = {
 
 			} //if
 
-			var src = PhotoPuzzle.folders[PhotoPuzzle.folder][PhotoPuzzle.srcIndexes[PhotoPuzzle.folder] || 0]
+			var src = PhotoPuzzle.photos[PhotoPuzzle.srcIndexes.temples || 0]
 
 			PhotoPuzzle.src = src;
 
-			$('.game-board').attr('data-name', PhotoPuzzle.names[PhotoPuzzle.folder][src] || '')
+			$('.game-board').attr('data-name', PhotoPuzzle.names[src] || '')
 
 			if (src && src.slice(0, 4) == 'aws/') {
 				src = src.replace('aws/', PhotoPuzzle.remotePath)
@@ -473,12 +389,12 @@ const PhotoPuzzle = {
 						localStorage.setItem('gamesCompleted', PhotoPuzzle.games_completed)
 						//Trunk.remove('squares');
 
-						PhotoPuzzle.srcIndexes[PhotoPuzzle.folder] = (++PhotoPuzzle.srcIndexes[PhotoPuzzle.folder] % PhotoPuzzle.folders[PhotoPuzzle.folder].length)
+						PhotoPuzzle.srcIndexes.temples = (PhotoPuzzle.srcIndexes.temples + 1) % PhotoPuzzle.photos.length
 
 						localStorage.setItem('srcIndexes', JSON.stringify(PhotoPuzzle.srcIndexes))
 
 						$('.thumbs span').removeClass('selected')
-						$('.thumbs span:nth-child('+(PhotoPuzzle.srcIndexes[PhotoPuzzle.folder]+1)+')').addClass('selected')[0].scrollIntoView()
+						$('.thumbs span:nth-child('+(PhotoPuzzle.srcIndexes.temples+1)+')').addClass('selected')[0].scrollIntoView()
 
 						var delay = 1000;
 
@@ -497,26 +413,6 @@ const PhotoPuzzle = {
 		$('.settingsDialog  button[type="reset"]').click(function(event) {
 			event.preventDefault()
 			$('.settingsDialog').removeAttr('open')
-		})
-
-		$('.snapPhoto').click(function() {
-			$('.snapPhotoInput').trigger('click')
-		})
-
-		$('.pickPhoto').click(function() {
-			$('.pickPhotoInput').trigger('click')
-		})
-
-		$('.snapPhotoInput, .pickPhotoInput').change(function() {
-			var file = this.files[0]
-			if (!file) return
-
-			var reader = new FileReader()
-			reader.onload = function() {
-				PhotoPuzzle.createSource(reader.result, true, 'my_photos')
-			}
-			reader.readAsDataURL(file)
-			this.value = ''
 		})
 
 		$('.preview').click(function() {

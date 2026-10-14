@@ -78,28 +78,6 @@ var local = {
 		'aws/temples/anchorage.jpg': 'Anchorage, Alaska Temple',
 		'aws/temples/kansas_city.jpg': 'Kansas City, Missouri Temple',
 		'../temples/20181027_173502.jpg': 'Nauvoo, Illinois Temple',
-        'aws/temples/san_diego.jpg': 'San Diego, California Temple',
-
-	},
-
-	historic: {
-		'../temples/cove_fort_cabin2.jpg': 'Cabin at Cove Fort',
-		'aws/pioneer/assembly_hall.jpg': 'Assembly Hall on Temple Square, Salt Lake City, Utah',
-		'aws/pioneer/books.jpg': 'Books from Latter-day Saints\' High School',
-		'aws/pioneer/ensign_peak.jpg': 'Ensign Peak, Salt Lake City, Utah',
-
-		'aws/pioneer/bookofmormons.jpg': 'Book of Mormon Editions',
-		'aws/pioneer/pioneer_school.jpg': 'Pioneer School',
-		'aws/pioneer/printingpress.jpg': 'Printing Press',
-		'aws/pioneer/bookshelf.jpg': 'Books and Pioneer Artifacts',
-		'aws/pioneer/yoke.jpg': 'Pioneer Era Tools',
-		'aws/pioneer/brigham.jpg': 'Statue of Heber C Kimball, Brigham Young, Willard Richards',
-		'aws/pioneer/wagon.jpg': 'Prairie Schooner',
-		'aws/pioneer/handcart.jpg': 'Handcart Replica',
-
-		'aws/pioneer/cove_fort_cabin.jpg': 'Cabin at Cove Fort',
-		'aws/pioneer/tabernacle.jpg': 'Tabernacle at Temple Square, Salt Lake City, Utah',
-		'aws/pioneer/lion_house_piano.jpg': 'Piano in the Lion House',
-		'aws/pioneer/cove_fort_room.jpg': 'Living Quarters at Cove Fort',
+		'aws/temples/san_diego.jpg': 'San Diego, California Temple'
 	}
 }
