@@ -196,38 +196,7 @@
 		vertical-align: middle;
 	}
 
-	span.dashed {
-		display: inline-block;
-		padding: 3px;
-		background: #fff;
-		margin: 2vw;
-		box-sizing: border-box;
-		width: 21vw;
-		height: 15vw;
-		text-align: center;
-		verticle-align: middle;
-		position: relative;
-		box-shadow: 2px 2px 5px black;
-		font-size: .8rem;
-
-		xborder: 2px dashed gray;
-		border-radius: 5px;
-		background: white;
-		box-shadow: none;
-	}
-	span.dashed img {
-		max-width: 100%;
-		max-height: 100%;
-
-		display: block;
-		margin: 0 auto;
-		max-height: 80%;
-	}
-
 	.thumbs {
-		xborder: 1px solid black;
-		xbackground: #ccc;
-		xpadding: 5px;
 		display: flex;
 		flex-direction: column;
 		max-height: 100%;
@@ -237,14 +206,9 @@
 
 
 	.thumbs ::-webkit-scrollbar {
-		x-webkit-appearance: none;
-		xwidth: 8px;
 	}
 
 	.thumbs ::-webkit-scrollbar-thumb {
-		xborder-radius: 9px;
-		xbackground-color: rgba(128,128,128,1);
-		x-webkit-box-shadow: 0 0 2px rgba(0,0,0,1);
 	}
 
 
@@ -276,7 +240,6 @@
 		position: relative;
 	}
 	.thumbs span img {
-		xmax-width: 100%;
 		max-height: 100%;
 	}
 
@@ -292,7 +255,6 @@
 	}
 
 	.thumbs div span:after {
-		xcontent: '_ . _ _ _';
 		display: block;
 		background: gray;
 		width: 100%;
@@ -319,8 +281,6 @@
 	.sizes input + span {
 		display: inline-block;
 		padding: 1px .5em 1px 1em;
-		xbackground: #fff;
-		xborder-radius: 5px;
 	}
 	.sizes input:checked + span {
 		outline: 4px solid #08f;
@@ -371,11 +331,9 @@
 		right: 0;
 		bottom: -1em;
 		display: flex;
-		xjustify-content: center;
 		align-items: center;
 		text-align: center;
 		padding: 0 2em;
-		xfont-size: 1.25rem;
 		pointer-events: none;
 	}
 
@@ -397,13 +355,6 @@
 		width: 768px;
 		height: 768px;
 		background-repeat: no-repeat;
-		xposition: absolute;
-		xleft: 0;
-		xtop: 0;
-		xwidth: 100%;
-		xheight: 100%;
-		xbackground-size: contain;
-		xbackground-position: center center;
 	}
 
 	#squares {
@@ -462,9 +413,7 @@
 
 	[class^="rotated-"],
 	[class*=" rotated-"] {
-		xoutline: none;
 		transition: all .5s;
-		xoutline-offset: 0;
 	}
 	[class^="rotated-"]:before,
 	[class*=" rotated-"]:before {
@@ -539,7 +488,6 @@
 
 	<dialog class="settingsDialog">
 		<form>
-			<!-- header>Select Photo to Begin</header -->
 			<header>New Game Settings</header>
 			<main>
 
@@ -570,24 +518,8 @@
 		</form>
 	</dialog>
 
-	<script type="text/javascript">
-
-	/*
-	window.onerror = function(message, source, lineno, colno, error) {
-	alert('Error in "' + source + '" at ' + lineno + '-' + colno + '.  Please contact support at digitalfunmedia@gmail.com about this error: "' + message + '"')
-	//alert("Error on line " + line + "\n" + msg);
-	console.log(message, source, lineno, colno, error, arguments)
-	// return true to prevent browser from displaying error
-	return true
-	return false
-}
-/* */
-
-</script>
-
 <script src="../jquery-3.4.1.min.js"></script>
 <script src="../temples/photos.js"></script>
-<script src="https://lds-photo-puzzle.s3-us-west-1.amazonaws.com/remote.js"></script>
 <script src="./photo-puzzle.js"></script>
 
 </body>

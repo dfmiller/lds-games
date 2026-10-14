@@ -69,7 +69,6 @@ html, body { height: calc(100vh - 32px); }
 	flex-direction: column;
 	justify-content: center;
 	padding: 10px;
-	xmin-height: 85vw;
 	box-sizing: border-box;
 	position: relative;
 	z-index: 20;
@@ -79,9 +78,7 @@ html, body { height: calc(100vh - 32px); }
 	display: flex;
 	justify-content: center;
 
-	xheight: 1.625em;
 	flex: 0 0 1.5em;
-	xheight: fit-content;
 }
 
 .letter,
@@ -107,7 +104,6 @@ b {
 	outline: 2px solid black;
 	outline-offset: -1px;
 	border: 0px none;
-	xflex: 0 0 1.125em;
 }
 
 .letter::before {
@@ -176,7 +172,6 @@ b {
 }
 
 nav {
-	xmin-height: 30vw;
 	background: #eee;
 	color: black;
 }
@@ -200,7 +195,6 @@ aside {
 }
 
 nav::before {
-	xcontent: '';
 	background-image: url(holly.png);
 	width: 25vw;
 	height: 25vh;
@@ -214,8 +208,6 @@ nav::before {
 }
 
 .key-highlight {
-	xbackground: green;
-	xcolor: green;
 	position: relative;
 }
 
@@ -329,7 +321,6 @@ dialog {
 	line-height: 1.95em;
 	padding: 0 5px;
 	margin: 0;
-	xoutline: 1px solid currentColor;
 	display: inline-block;
 	position: relative;
 	width: .8em;
@@ -447,7 +438,6 @@ nav {
 	bottom: 0;
 	padding: 6.3vh;
 	height: 100%;
-	xdisplay: block;
 	box-sizing: border-box;
 	max-height: none;
 	z-index: 100;
@@ -479,11 +469,9 @@ nav {
 
 .key, u, i {
 	height: 2.5em;
-	xmax-height: 6vh;
 }
 
 nav {
-	xheight: 18.9vh;
 }
 
 nav div {
@@ -544,7 +532,6 @@ dialog button[disabled] {
 .levels span.active {
 	background: orange;
 	color: white;
-	xfont-weight: bold;
 }
 
 .has-wrong .letter:not(.wrong) {
@@ -724,7 +711,6 @@ dialog button[disabled] {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	xmax-width: 120px;
 }
 
 .colorPickerDialog s {
@@ -744,7 +730,6 @@ dialog button[disabled] {
     border: 2px outset;
 }
 .ripple:hover {
-    xbackground: #aaa radial-gradient(circle, transparent 1%, #aaa 1%) center/15000%;
 }
 .ripple:active {
     background-size: 100%;

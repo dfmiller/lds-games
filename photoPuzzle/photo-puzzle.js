@@ -102,7 +102,6 @@ const PhotoPuzzle = {
 		var img = new Image
 		$(img).on('error', function() {
 			source.remove()
-			//$(source).find('img')[0].src = './broken.jpg'
 		})
 		img.src = fullSrc
 	},
@@ -195,9 +194,6 @@ const PhotoPuzzle = {
 			var image = new Image()
 			image.onerror = function() {
 				alert('error loading image '+ src)
-				//TODO: remove image from list
-				//picture = '';
-				//beginGame();
 			}
 			image.onload = function() {
 				var offsetx = Math.floor(Math.random()*(this.width - 768))
@@ -366,9 +362,6 @@ const PhotoPuzzle = {
 
 					$('#plays').text(plays);
 
-					//Trunk.save('squares', squares);
-					//Trunk.save('score', score);
-
 					if (fixed === gridSize*gridSize) {
 
 						localStorage.removeItem('squares')
@@ -387,8 +380,6 @@ const PhotoPuzzle = {
 						PhotoPuzzle.games_completed++;
 						$('#games_completed').text(PhotoPuzzle.games_completed)
 						localStorage.setItem('gamesCompleted', PhotoPuzzle.games_completed)
-						//Trunk.remove('squares');
-
 						PhotoPuzzle.srcIndexes.temples = (PhotoPuzzle.srcIndexes.temples + 1) % PhotoPuzzle.photos.length
 
 						localStorage.setItem('srcIndexes', JSON.stringify(PhotoPuzzle.srcIndexes))
@@ -447,15 +438,13 @@ const PhotoPuzzle = {
 			}
 
 			var m = Math.min(w2, -wh);
-			//$('#img_wrapper').css({ left:(w2-m)/2, top:(-wh-m)/2 });
 			$('#img_wrapper').css({ left:0, top:(-wh-m)/4 });
 			$('#zoom_wrapper').css({ left:0, top:(-wh)/2 });
 
 			var r2 = (Math.min($('#preview').width(), $('#preview').height())-8)/768;
 			$('#img_wrapper').css({ transform:'scale('+r2+')' });
 
-			//var r3 = (Math.min($('#preview').width(), $('#preview').height())-8)/768;
-			$('#zoom_wrapper').css({ transform:'scale('+ratio+')' });
+			$('#zoom_wrapper').css({ transform:'scale('+ratio+')' })
 
 		}).trigger('resize')
 

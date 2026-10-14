@@ -5,15 +5,13 @@ const FLAT = 2;
 
 
 for(temple in temples) {
-    //addPhoto(temple.replace('aws/', 'https://lds-photo-puzzle.s3-us-west-1.amazonaws.com/'), temples[temple], false)
     addPhoto('./temples/'+temple, temples[temple], false)
 }
 
-function addPhoto(path, tooltip, before) {
+function addPhoto(path, tooltip) {
 	var img = document.createElement('IMG')
 	img.setAttribute('src', path)
     img.setAttribute('title', tooltip)
-    //img.onerror="this.src='noimage.gif'" 
 	img.addEventListener('click', function(e) {
 		document.querySelectorAll('.selected').forEach(function(selected) {
 			selected.removeAttribute('class')
@@ -23,15 +21,7 @@ function addPhoto(path, tooltip, before) {
 
 	var span = document.createElement('SPAN')
 	span.appendChild(img)
-	if (before) {
-		document.querySelector('#imageGrid').insertBefore(span, document.querySelector('.selected').parentElement)
-		document.querySelectorAll('.selected').forEach(function(selected) {
-			selected.removeAttribute('class')
-		})
-		img.setAttribute('class', 'selected')
-	} else {
-		document.querySelector('#imageGrid').appendChild(span)
-	}
+	document.querySelector('#imageGrid').appendChild(span)
 
 	if (path.split('/').pop() == (localStorage.getItem('jigsawSrc') || '').split('/').pop()) {
 		img.classList.add('selected')
@@ -266,23 +256,6 @@ function addPhoto(path, tooltip, before) {
 					document.querySelector('#options').className = 'optionswrapper shown';
 					document.querySelector('.selected').scrollIntoView({behavior: 'auto', inline: 'center'})
 				}, false)
-/*
-				document.querySelector('#fileupload').addEventListener('click', function(e) {
-					e.target.value = ''
-				})
-
-				document.querySelector('#fileupload').addEventListener('change', function(e) {
-					Array.from(e.target.files).forEach(function(file) {
-						if (typeof file !== 'undefined') {
-							var reader = new FileReader();
-							reader.onload = function() {
-								addPhoto(reader.result, null, true)
-							}
-							reader.readAsDataURL(file)
-						}
-					})
-				})
-*/
 
 				document.querySelector('.nextButton').addEventListener('click', function(e) {
 					js.general.updateSettings();
@@ -496,7 +469,6 @@ function addPhoto(path, tooltip, before) {
 					for(var x = 0; x < js.pieceCountX; x++) {
 						var pieceX = js.general.randomNumber(rangeMinX, rangeMaxX);
 						var pieceY = js.general.randomNumber(rangeMinY, rangeMaxY)
-                        //var pieceY = js.canvasH + js.aside - h
 						if (js.debug) { //if in debug mode, start the puzzle completed
 							pieceX = w * x;
 							pieceY = h * y;
@@ -728,11 +700,6 @@ function addPhoto(path, tooltip, before) {
 
 				ctx.save();
 
-				// if (js.puzzle.naturalWidth > js.puzzle.naturalHeight) {
-				// 	ctx.translate(250, 175);
-				// 	ctx.rotate(90*Math.PI/180)
-				// }
-
 				if (piece.solved) {
 					js.ctx.lineWidth = 0;
 					js.ctx.strokeStyle = 'rgba(0,0,0,0)';
@@ -769,7 +736,6 @@ function addPhoto(path, tooltip, before) {
 				//deal with left edge
 				js.general.drawTabOrBlank(piece,3,piece.sides.left, doBackground);
 
-				//ctx.lineTo(pieceX, pieceY); //top left corner - back to origin
 				ctx.closePath(); //back to origin
 
 				ctx.clip();

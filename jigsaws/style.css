@@ -61,8 +61,6 @@ body > header {
 }
 
 .canvasWrapper .canvas {
-	xbox-shadow:0 0 10px rgba(0,0,0,.2);
-	xbackground: silver;
     position: absolute;
     top: 0;
 }
@@ -103,7 +101,6 @@ body > header {
 	top:0;
 	right:0;
 	max-height: 3em;
-	xoverflow: hidden;
 }
 
 .previewButton img {
@@ -167,7 +164,6 @@ body > header {
 #imageGrid span {
 	display: flex;
 	align-items: center;
-	xbackground: grey;
     max-width: 16vmin;
 }
 
@@ -262,7 +258,6 @@ body > header {
 
 .inputwrap label {
 	padding:0 0 1em;
-	xdisplay:block
 }
 
 .forminput {
@@ -337,8 +332,6 @@ button {
 	box-sizing:border-box;
 	border:0;
 	border-radius:3px;
-	xbackground:#000;
-	xcolor:#fff;
 	outline:0;
 	cursor:pointer;
 	text-align:center;

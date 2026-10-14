@@ -95,7 +95,6 @@ select, option {
 	}
 
 	#edge > div {
-		xoverflow:hidden;
 	}
 
 	.letter {
@@ -108,7 +107,6 @@ select, option {
 		max-height: 999px;
 		zoom:1;
 		-webkit-text-size-adjust: none;
-		xoverflow:hidden;
 		vertical-align: top;
 	}
 
@@ -138,8 +136,6 @@ select, option {
 	#control {
 		width: 25%;
 		height: 100%;
-		xoverflow: auto;
-		xz-index: 10;
 		position: relative;
 	}
 
@@ -346,7 +342,6 @@ select, option {
 		font-size: 72px !important;
 		line-height: 4em;
 		opacity: .7;
-		xpadding: 25% 0 !important;
 		top: 0 !important;
 	}
 
@@ -812,7 +807,6 @@ select, option {
 	#wL span {
 		float: left;
 		margin-right: .5em;
-		xfont-size: 8vw;
 		line-height: 1em;
 	}
 

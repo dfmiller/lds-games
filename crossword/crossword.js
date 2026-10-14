@@ -1,18 +1,4 @@
 
-$('.title').click(function() {
-	//$('.letter:empty, .letter.wrong').removeClass('.wrong').text('x')
-})
-
-
-
-//localStorage.removeItem('crossword')
-//localStorage.removeItem('crosswordLevel')
-
-
-//crossword, crosswordSet, crosswordThemed, crosswordRandom, crosswordThemes, crosswordRandoms
-
-//var search = 'http://www.oneacross.com/cgi-bin/search_banner.cgi?c0=x&p0='
-
 var showErrors = localStorage.getItem('showErrors') != 'no'
 var markVowels = localStorage.getItem('markVowels') || 'no'
 
@@ -286,9 +272,6 @@ $('.colorPickerDialog main').empty().append(
 	})
 )
 
-/* */
-
-
 function resetHintTimer() {
 	$('.clue-wrapper').removeClass('tap-for-hint')
 	clearTimeout(Game.hintTimeout)
@@ -325,16 +308,12 @@ var Game = {
 			if (!active.hasClass('wrong') || active.text() === '') {
 				if (Game.dir === 1) {
 					x -= 1
-					var prev = active.prev()
 				} else {
 					y -= 1
 				}
 				var prev = $('#b-'+x+'-'+y)
 				if (prev.hasClass('letter')) {
-					//	active.removeClass('active')
-					active = prev//.addClass('active')
-
-
+					active = prev
 				} else {
 					var wrong = $('.wrong')
 					if (wrong.length) {
@@ -391,12 +370,6 @@ var Game = {
 			next.addClass('active')
 		} else {
             goToNext()
-			//next = $('.letter:empty:first')
-			//if (next.length) {
-			//	active.removeClass('active')
-			//	next.addClass('active')
-			//	.trigger('click')
-			//}
 		}
 
 		if ($('.letter:empty').length == 0) {
@@ -472,12 +445,6 @@ var Game = {
 
 		$('.tabs label:contains('+Game.set+')').click()
 
-		//Math.seed = Math.ceil(Game.level / 10)
-
-		//Game.puzzle = themes[Object.keys(themes)[Game.level-1]]
-
-		//$('.title').text(Object.keys(themes)[Game.level-1])
-
 		if (Game.set == 'Themed') {
 			Game.level = Math.max(1, Object.keys(themes).indexOf(localStorage.getItem('crosswordThemed')) + 1)
 			Game.title = Object.keys(themes)[Game.level-1]
@@ -519,20 +486,6 @@ var Game = {
 			switch(event.keyCode) {
 				case 8:
 				$('[data-letter="<"]').trigger('touchstart')
-				break
-
-				case 38:
-				console.log('up')
-				//$('.letter.active')
-				break
-				case 40:
-				console.log('down')
-				break
-				case 37:
-				console.log('left')
-				break
-				case 39:
-				console.log('right')
 				break
 
 				default:
@@ -593,7 +546,6 @@ var Game = {
 		Game.level = parseInt(level)
 		Game.set = $('.tabs label.active').text()
 		localStorage.setItem('crosswordSet', Game.set)
-		//localStorage.setItem('crosswordLevel', Game.level)
 
 		if (Game.set == 'Themed') {
 			Game.theme = Object.keys(themes)[level-1]
@@ -815,11 +767,9 @@ var Game = {
 				}
 
 				if (x >= Game.dims || y >= Game.dims || x < 0 || y < 0) {
-					//console.log('missing '+x +', '+ y + ' ' + word + ' ' + i)
 					good = false
 					return
 				} else if (Game.grid[x][y].letter !== '.' && Game.grid[x][y].letter !== letter) {
-					//console.log('bad letter: ' + letter)
 					good = false
 					return
 				} else if (good && Game.grid[x][y].letter === '.') {
@@ -906,7 +856,6 @@ var Game = {
 						}
 					})
 
-					//console.log(word)
 					return true //it fits!
 				}
 			}
@@ -943,10 +892,7 @@ var Game = {
 			.filter(function(key) { return (Game.set == 'Themed' ? themes[Game.title] : allWords)[key] && key.replace(/[^a-z]/gi, '').length <= Game.dims })
 			.sort(function(a, b) { return (b.replace(/[^a-z]/gi, '').length - a.replace(/[^a-z]/gi, '').length) || rnd(3)-1 }) // sort longest to shortest
 
-			//* /put longest word in middle across
 			var word = keys[Game.set == 'Themed' ? 0 : Game.level]
-
-			//console.log(keys)
 
 			var len = word.replace(/[^a-z]/gi, '').length
 			var x = Math.floor((Game.dims - len) / 2)
@@ -954,16 +900,12 @@ var Game = {
 			var dir = 1 //across
 
 			if (Game.placeWord(word, y, x, dir, false)) {
-				//console.log('placed', word)
 				keys.splice(keys.indexOf(word), 1)
 			}
 
 			while (keys[0].replace(/[^a-z]/gi, '').length >= Math.min(len, 10)) {
-				//console.log('removed:', keys[0])
 				keys.splice(0, 1)
 			}
-			/* */
-
 
 			[0,1,2].sort(function() { return rnd(2) }).forEach(function(slot) {
 				word = keys[0]
@@ -974,11 +916,7 @@ var Game = {
 
 				keys.splice(keys.indexOf(word), 1)
 
-				if (Game.placeWord(word, y, x, dir, false)) {
-					//console.log('placed')
-				}
-
-				//alert(word + ' '+x+','+y)
+				Game.placeWord(word, y, x, dir, false)
 
 			})
 
@@ -1043,7 +981,6 @@ var Game = {
 
 			$('.clue-wrapper strong').show();
 
-			console.log(Game.wordCount, Game.title)
 			localStorage.setItem('crossword', JSON.stringify(Game.grid))
 			localStorage.setItem('crosswordWordList', JSON.stringify(Game.wordList))
 
@@ -1082,27 +1019,6 @@ var Game = {
 		)
 	}
 
-	/*
-	var size = Math.floor(window.innerWidth/Game.dims) + 1
-	var minSize = Math.floor((window.innerHeight - document.querySelector('aside').clientHeight)/Game.dims*.3)
-	var gameBoard = document.getElementById('game-board')
-	do {
-	size--
-	$('section').css({fontSize: size+'px'})
-} while (size > minSize
-&& (
-/*
-document.getElementById('game-board').clientWidth > document.getElementById('board-wrapper').clientWidth
-|| document.getElementById('game-board').clientWidth > window.innerWidth
-|| document.getElementById('game-board').clientHeight > document.getElementById('board-wrapper').clientHeight
-
-gameBoard.clientHeight > document.getElementById('board-wrapper').clientHeight
-|| gameBoard.scrollWidth > gameBoard.clientWidth
-|| gameBoard.scrollHeight > gameBoard.clientHeight
-)
-)
-}
-*/
 
 setTimeout(window.onresize, 1000)
 

@@ -4,12 +4,6 @@ window.oncontextmenu = function() { return false }
 
 function $(selector) {
 	if (typeof selector == 'string') {
-		//var es = document.querySelectorAll(selector);
-		//for(var i=0;i<es.length;i++) {
-		//	enpower(es[i]);
-		//}
-		//return es;
-
 		return enpower(document.querySelector(selector));
 	} else {
 		return enpower(selector);
@@ -77,7 +71,6 @@ var filter = /[^a-záéíóúñü]/ig;
 compare = function(a,b){
 	if (a.word) a = a.word;
 	if (b.word) b = b.word;
-	//return a.toLowerCase().localeCompare(b.toLowerCase())
 	return a.toLowerCase().replace(filter,'').localeCompare(b.toLowerCase().replace(filter,''));
 };
 
@@ -93,7 +86,6 @@ try {
 }
 
 if (useLocalStorage) {
-	//localStorage.clear();
 	Trunk.load = function(varname, defaultValue) {
 		if (typeof localStorage[varname] == 'undefined') {
 			return defaultValue;
@@ -112,7 +104,6 @@ if (useLocalStorage) {
 	};
 	init();
 } else if (chrome && chrome.storage && chrome.storage.sync) {
-	//chrome.storage.sync.clear();
 	chrome.storage.sync.get(null, function(trunk) {
 		Trunk = JSON.parse(JSON.stringify(trunk));
 		Trunk.load = function(varname, defaultValue) {
@@ -139,8 +130,6 @@ if (useLocalStorage) {
 
 
 function init() {
-
-	//localStorage.clear();
 
 	var board = [], SIZE, MAX_WORDS, hilites = [], wordStart = {}, wordEnd = {}, hilite = null, w = 1024, h = 768, SCALE = 0, current_word = 0, interval = null, dblclick = 0, pos = false, holidayTitle = '', puzzleTitle = ''
 
@@ -409,14 +398,12 @@ function init() {
 			dialog.show(settings, {title:'<i class="sm fa fa-sliders"></i> '+translate['Puzzle Settings'],buttons:{'close':function(){
 				dialogHide();
 				dialog.show(menu, { title:'' });
-				//dialog.show(new_game, {title:'<i class="sm fa fa-refresh"></i> '+translate['New Puzzle'],buttons:{'start new puzzle':function(){ new_puzzle(1); }}});
 			}}});
 
 		} else {
 
 			if (currentList.length == 0) {
 				dialog.show(menu, { title:'' });
-				//dialog.show(new_game, {title:'<i class="sm fa fa-refresh"></i> '+translate['New Puzzle'],buttons:{'start new puzzle':function(){ new_puzzle(1); }}});
 			} else {
 				new_puzzle();
 			}
@@ -460,16 +447,14 @@ function init() {
 	}
 
 	function buildBoard(w,h) {
-		//SCALE = 4
-		ROWS = 8*SCALE;//16;
+		ROWS = 8*SCALE;
 		MAX_WORDS = 10 * SCALE;
 
-		//SIZE = Math.floor(h*.06);
 		SIZE = Math.floor(h*(.12/SCALE));
 		SIZE_A = Math.floor(SIZE * .7);
 		SIZE_C = Math.floor(SIZE - SIZE_A);
 		SIZE_D = Math.floor(SIZE_C/2)-2;
-		SIZE_B = Math.floor(SIZE_A/2)+2;//Math.floor(SIZE_D/4);
+		SIZE_B = Math.floor(SIZE_A/2)+2;
 
 		$('#wrapper').css({
 			width: w+'px',
@@ -500,7 +485,6 @@ function init() {
 							},
 							mouseup: function(e) {
 								endSelect(e, this, true);
-								//clearHilite();
 							}
 						}
 					})
@@ -511,26 +495,19 @@ function init() {
 
 		$('.background').bind({mouseup: function(e) {
 			endSelect(e, this, true);
-			//clearHilite();
 		}, touchend: function(e) {
 			endSelect(e, this, true);
-			//clearHilite();
 		}})
 
 	}
 
 	function new_puzzle(new_list) {
 
-//		console.log('backgroundColor', holiday_data[useWordList], nextHoliday, holidays[nextHoliday], new_list, futureList)
-
-
 		try { backgrounds[backgroundColor]() } catch(e) {}
 
 		if (dialog.dialog) {
 			setTimeout(function() { dialog.hide(); }, 1);
 		}
-
-		//setTimeout(function() { loading.show(); }, 10);
 
 		current_word = 0;
 
@@ -546,7 +523,6 @@ function init() {
 
 		var lettersObject = {};
 
-		//if already have wordlist, skip
 		if (new_list == 1 || currentList.length == 0) {
 			selections = [];
 			words = [];
@@ -770,7 +746,6 @@ function init() {
 		}
 
 		//word list
-		//$('#title').innerHTML = '<span>'+title+'</span>';
 		puzzleTitle = title
 
 		if (holidayTitle && holidayTitle.toLowerCase() != puzzleTitle.toLowerCase()) {
@@ -778,13 +753,6 @@ function init() {
 		} else {
 			$('.holiday').innerHTML = puzzleTitle
 		}
-
-		//$('#title').removeClass('scroll');
-		//console.log($('#title').scrollWidth, $('#title').clientWidth)
-
-		//if ($('#title').scrollWidth > $('#title').clientWidth) {
-			//$('#title').addClass('scroll');
-		//}
 
 		$('#wL').innerHTML = '';
 		words.sort(compare);
@@ -827,11 +795,6 @@ function init() {
 						}
 					}, 300);
 				},
-
-				/*dblclick: function() {
-					dblclick = 0;
-					od(this.textContent);
-				}*/
 
 			}}));
 		}
@@ -877,10 +840,6 @@ function init() {
 			$('#board').css({ visibility:''});
 			$('#word-list').css({ visibility:''});
 
-			if (reset) {
-				//secs = 0;
-				//$('#timer').innerHTML = '00:00';
-			}
 			if (useTimer) {
 				$('#timer').css({visibility:''});
 				interval = setInterval(function() {
@@ -921,16 +880,12 @@ function init() {
 		if (!hilite) hilite = element('div', {id:'hilite',class:'hilite'});
 		hilite.css({
 			display: 'block',
-			//minWidth: (SIZE_A-20) + 'px',
-			//height: (SIZE_A-20) + 'px',
 			minWidth: SIZE_A + 'px',
-			//height: SIZE_A + 'px',
 			borderRadius: SIZE_A + 'px',
 			webkitTransformOrigin: SIZE_B+'px '+SIZE_B+'px',
 			top: wordStart['r']*SIZE + SIZE_D + 'px',
 			left: wordStart['c']*SIZE + SIZE_D + 'px',
 			width: SIZE_A + 'px'
-			//width: (SIZE_A-20) + 'px'
 		});
 
 		setHilite(hilite, hiliteStyle);
@@ -980,7 +935,6 @@ function init() {
 				}
 				if (t && showSelectedLetter) {
 					onLetter = $('#L-'+r+'-'+c)
-					//onLetter = t;
 					$(onLetter).addClass('over');
 				}
 
@@ -990,7 +944,6 @@ function init() {
 			}
 
 			d = Math.sqrt(Math.pow(c-wordStart.c,2) + Math.pow(r-wordStart.r,2)) +1;
-			//hilite.style.width = ((d*SIZE) - SIZE_C - 20) + 'px';
 			hilite.style.width = ((d*SIZE) - SIZE_C) + 'px';
 			t = Math.atan2((r-wordStart.r)*SIZE, (c-wordStart.c)*SIZE) * (180/Math.PI);
 			hilite.style.webkitTransform = 'rotate('+t+'deg)';
@@ -1072,7 +1025,6 @@ function init() {
 						selections.push({
 							display: hilite.css('display'),
 							minWidth: hilite.css('minWidth'),
-							//height: hilite.css('height'),
 							borderRadius: hilite.css('border-radius'),
 							webkitTransformOrigin: hilite.css('webkitTransformOrigin'),
 							webkitTransform: hilite.css('webkitTransform'),
@@ -1137,17 +1089,6 @@ function init() {
 							achievements['largest'] = Math.max(achievements['largest'], (newScale*8) );
 
 							Trunk.save('achievements', achievements);
-
-							//console.log(localStorage.achievements)
-							/*
-							 *star 1, 2, 5
-							 *bookmark: 10, 25, 50
-							 *certificate: 100, 250, 500
-							 *trophy: 1K, 2.5K 5K
-							 *fire: 10K 25K 50K
-							 *
-							 *heart, checkmark, exclaimation, flag, flash, asterisk, gift, key, rocket, smile
-							 */
 
 							setTimeout(function() {
 

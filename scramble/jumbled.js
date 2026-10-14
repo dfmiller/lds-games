@@ -9,9 +9,6 @@ var Element = function(s) {
 	return document.createElement(s)
 }
 
-//localStorage.clear()
-
-
 var Game = {
 
 	colors: ['pink', 'red', 'Orange', 'gold', 'DarkKhaki', 'lime', 'cyan', 'DodgerBlue', 'Magenta'],
@@ -51,10 +48,6 @@ var Game = {
 				}
 			})
 		})
-
-		//console.log(characters)
-
-
 
 		$('.selectLevel').append(
 			Array(Math.floor(phrases.length)).fill().map((v, i) =>
@@ -111,8 +104,6 @@ var Game = {
 
 			Game.gameBoard.bind('touchmove mousemove', function(event) {
 				event = event.originalEvent || event
-
-				//console.log(event.type)
 
 				if (event.type == 'mousemove' && !Game.isDown) {
 					return
@@ -209,12 +200,6 @@ var Game = {
 
 		var phrase = phrases[Game.round % phrases.length]
 
-    /*
-		var temp = phrase.split('|')
-		phrase = '"' + temp[0]+'"'
-		author = temp[1]
-    */
-
 		phrase.split(' ').forEach(function(word) {
 
 			var div = $('<div/>')
@@ -247,7 +232,6 @@ var Game = {
 
 
 		Game.gameBoard.append(
-			//$('<div/>').addClass('word-wrapper width-full author').text(author),
 			$('<div/>').addClass('word-wrapper width-full filler')
 		)
 
@@ -256,8 +240,6 @@ var Game = {
 
 
 	adjustFont: async function () {
-		console.log('adjust')
-
 		var position = $('.game_wrapper').position()
 		Game.left = position.left
 		Game.right = Game.left + $('.game_wrapper').width()
@@ -266,27 +248,10 @@ var Game = {
 
 		var fontSize = 6
 		$('.draggable').hide().css({ top: 50, left: 50 })
-        /*
-		do {
-			fontSize -= .01
-			Game.gameBoard.css({ fontSize: fontSize + 'rem' })
-            console.log(fontSize)
-		} while(
-			(
-				//widest > Game.gameBoard.width() ||
-				Game.gameBoard[0].scrollHeight > Game.gameBoard.height()
-				|| Game.gameBoard[0].scrollWidth > Game.gameBoard.width()
-			)
-			&& fontSize > 1
-		)
-        /* */
-
-        //*
         var jump = fontSize
         while(jump >= .01) {
             jump = jump/2
 			Game.gameBoard.css({ fontSize: fontSize + 'rem' })
-            //console.log(fontSize, Game.gameBoard[0].scrollHeight, Game.gameBoard.height(), Game.gameBoard[0].scrollWidth, Game.gameBoard.width())
             if (
                 Game.gameBoard[0].scrollHeight > Math.round(Game.gameBoard.height())
 			    || Game.gameBoard[0].scrollWidth > Math.round(Game.gameBoard.width())
@@ -296,11 +261,9 @@ var Game = {
                 fontSize += jump
             }
         }
-		Game.gameBoard.css({ fontSize: (fontSize - .02) + 'rem' })
-        /* */
+        Game.gameBoard.css({ fontSize: (fontSize - .02) + 'rem' })
 
-
-		Game.letterHeight = $('.draggable').height()*1.2
+        Game.letterHeight = $('.draggable').height()*1.2
 
 		var max = $('.filler').position().top
 		var y = $('.game_wrapper').height() - max  - Game.letterHeight
@@ -309,7 +272,6 @@ var Game = {
 		$('.draggable').each(function() {
 			var z = $(this).text().charCodeAt(0)-65
 			x = Math.floor( ((Game.gameBoard.width() - Game.letterHeight*.5)/26) * z)
-			//alert((x/26))
 			$(this).css({
                 display: '',
 				left: x,
@@ -320,7 +282,6 @@ var Game = {
 
 
 	reset: function() {
-		//localStorage.clear()
 		Game.level = 0
 		Game.round = 0
 		Game.run()
@@ -335,9 +296,3 @@ Game.run()
 
 
 window.onresize = Game.adjustFont
-
-/*
-
-
-
-*/

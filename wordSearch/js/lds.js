@@ -3,20 +3,7 @@ var backgrounds = {
 	'none': function(){ $('.background').css({background:''}); },
 
 	'temples': function(){
-		/*
-		var temples = [
-			'portland.png',
-			'manti.png',
-			'logan.png',
-			'brigham_city.png',
-			'temple_doors.png',
-			'sacramento.png',
-			'slc.png',
-			'reno.png',
-			'ogden.png'
-		];*/
 		temple = temples[Math.floor(Math.random()*temples.length)];
-		//$('.background').css({backgroundImage:'url(./backgrounds/'+temple+')'});
 		$('.background').css({backgroundImage:'url('+temple+')'});
 	},
 

@@ -1,5 +1,3 @@
-//try {
-
 const Dialog = {
 
 	element: function(tagName) {
@@ -55,18 +53,3 @@ const Dialog = {
 	}
 
 }
-
-/*
-
-console.log('dialog', Dialog)
-
-Dialog.dialog("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.", 'Permission', {
-	decline: false,
-	accept: false
-})
-
-Dialog.alert("Test")
-
-/* */
-
-//} catch(e) { alert(e) }

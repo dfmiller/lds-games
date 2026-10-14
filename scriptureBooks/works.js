@@ -1,6 +1,3 @@
-//alert (books)
-
-
 var rnd = function (n) {
 	return Math.floor(Math.random() * n)
 }
@@ -53,7 +50,6 @@ var Game = {
 			Game.run()
 		})
 
-		// this.run()
 	},
 
 	showBook() {
