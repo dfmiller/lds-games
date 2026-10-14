@@ -197,6 +197,17 @@
 			}
 		}
 
+		html.game-open,
+		html.game-open body {
+			overflow: hidden;
+		}
+
+		body.game-open {
+			position: fixed;
+			top: var(--game-scroll-offset);
+			width: 100%;
+		}
+
 		@supports (height: 100dvh) {
 			@media (max-width: 700px) {
 				.game-frame {
@@ -282,6 +293,7 @@
 		const gameFrameTitle = document.querySelector('.game-frame-title')
 		const gameFrameContent = document.querySelector('.game-frame iframe')
 		let activeGameLink
+		let pageScrollY = 0
 
 		const games = [
 			{
@@ -355,18 +367,26 @@
 
 			event.preventDefault()
 			activeGameLink = link
+			pageScrollY = window.scrollY
 			gameFrameTitle.textContent = link.dataset.title
 			gameFrameContent.src = link.href
 			gameFrameContent.title = link.dataset.title
 			gameBackdrop.hidden = false
 			gameFrame.hidden = false
+			document.body.style.setProperty('--game-scroll-offset', '-' + pageScrollY + 'px')
+			document.body.classList.add('game-open')
+			document.documentElement.classList.add('game-open')
 		})
 
 		document.querySelector('.game-frame-close').addEventListener('click', function() {
 			gameFrame.hidden = true
 			gameBackdrop.hidden = true
 			gameFrameContent.src = 'about:blank'
-			if (activeGameLink) activeGameLink.focus()
+			document.body.classList.remove('game-open')
+			document.body.style.removeProperty('--game-scroll-offset')
+			document.documentElement.classList.remove('game-open')
+			window.scrollTo(0, pageScrollY)
+			if (activeGameLink) activeGameLink.focus({preventScroll: true})
 		})
 
 	</script>

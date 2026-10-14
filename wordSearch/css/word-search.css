@@ -39,14 +39,8 @@ select, option {
 		background-position: center center;
 	}
 
-	/*
-	@media (max-height: 400px) {
-		html, body { height: calc(100vh - 32px); }
-	}
-	*/
-
-	@media (min-height: 720px) {
-		html, body { height: calc(100vh - 40px); }
+	@supports (height: 100dvh) {
+		html, body { height: 100dvh; }
 	}
 
 	* {
