@@ -1,8 +1,6 @@
 
 const PhotoPuzzle = {
 
-	remotePath: 'https://lds-photo-puzzle.s3-us-west-1.amazonaws.com/',
-
 	/* from local storage */
 	games_completed: 0,
 
@@ -37,7 +35,7 @@ const PhotoPuzzle = {
 		this.initSizes()
 		this.initSources()
 
-		this.srcIndexes.temples = this.srcIndexes.temples || 0
+		this.srcIndexes.temples = ((Number(this.srcIndexes.temples) || 0) % this.photos.length + this.photos.length) % this.photos.length
 		var selected = this.srcIndexes.temples + 1
 
 		$('.thumbs span:nth-child('+selected+')').addClass('selected')
@@ -70,14 +68,9 @@ const PhotoPuzzle = {
 
 
 	createSource: function(src) {
-        var fullSrc = src
-		if (src.slice(0, 4) == 'aws/') {
-			fullSrc = src.replace('aws/', PhotoPuzzle.remotePath)
-		}
-
 		//add span
 		var source = $('<span/>').append(
-			$('<img/>').attr('src', fullSrc).contextmenu(function() {
+			$('<img/>').attr('src', src).contextmenu(function() {
 					event.preventDefault()
 					if (confirm('Remove this Photo?')) {
 						PhotoPuzzle.photos = PhotoPuzzle.photos.filter(function(s) {
@@ -103,7 +96,7 @@ const PhotoPuzzle = {
 		$(img).on('error', function() {
 			source.remove()
 		})
-		img.src = fullSrc
+		img.src = src
 	},
 
 
@@ -184,10 +177,6 @@ const PhotoPuzzle = {
 			PhotoPuzzle.src = src;
 
 			$('.game-board').attr('data-name', PhotoPuzzle.names[src] || '')
-
-			if (src && src.slice(0, 4) == 'aws/') {
-				src = src.replace('aws/', PhotoPuzzle.remotePath)
-			}
 
 			var encoded = (encodeURI(src) || '').replace(/\(/g, '%28').replace(/\)/g, '%29')
 
