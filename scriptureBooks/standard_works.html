@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Scripture Books</title>
+		<link rel="stylesheet" type="text/css" href="./dialog.css" />
+		<link rel="stylesheet" type="text/css" href="./works.css" />
+	</head>
+	<body>
+		<article class="game_wrapper">
+			<header class="app_bar flex-row space-between">
+				<b class="icon-men"></b>
+				<h1>
+					<span style="white-space: nowrap;">Scripture Books</span>
+				</h1>
+				<s class="spacer"></s>
+				<b class="restart"> RESTART</b>
+			</header>
+			<main class="game-board">
+				<div class="x-row">
+					<span>
+						completed
+						<b class="level">-/-</b>
+						incorrect
+						<b class="errors">0</b>
+					</span>
+					<span class="volume">Book of Mormon</span>
+					<span>
+						seconds
+						<b class="timer">00:00.000</b>
+						best
+						<b class="best">--:--.---</b>
+					</span>
+				</div>
+				<div class="x-row">
+					<span class="volume" style="transform:rotate(-5deg);">Old Testament</span>
+					<span class="book"></span>
+					<span class="volume" style="transform:rotate(5deg);">New Testament</span>
+				</div>
+				<div class="x-row">
+					<span class="volume" style="transform:rotate(-8deg);">Doctrine and Covenants</span>
+					<p style="width:8%"></p>
+					<span class="volume" style="transform:rotate(8deg);">Pearl of Great Price</span>
+				</div>
+				<div class="instructions">Tap the Volume which contains <em>...</em></div>
+			</main>
+			<footer>
+			</footer>
+		</article>
+
+		<dialog class="startDialog">
+			<form>
+				<header></header>
+				<main class="text-center">
+					How quickly can you select the correct Standard Work for each book?
+				</main>
+				<footer>
+					<button type="button">start</button>
+				</footer>
+			</form>
+		</dialog>
+
+		<script type="text/javascript" src="../jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="./_books.js"></script>
+		<script type="text/javascript" src="./works.js"></script>
+	</body>
+</html>

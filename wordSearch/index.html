@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="en" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="google" value="notranslate" />
+	<title>Word Search</title>
+	<link type="text/css" href="./css/word-search.css" rel="stylesheet" />
+	<style>
+
+		/*html, body {
+			height: calc(100vh - 50px);
+		}
+
+		@media (max-height: 400px) {
+			html, body { height: calc(100vh - 32px); }
+		}
+
+		@media (min-height: 720px) {
+			html, body { height: calc(100vh - 90px); }
+		}*/
+
+	</style>
+</head>
+<body class="background" id="body">
+	<div id="wrapper">
+		<div id="background" class="holiday"></div>
+		<div id="control">
+			<div id="c2">
+				<div id="ctrl-btnz" class="ctrl-btnz">
+					<div class="new_game"><i class="icon fa fa-refresh"></i></div>
+					<div class="menu_button"><i class="icon fa fa-bars"></i></div>
+				</div>
+				<div id="timer">00:00</div>
+				<div id="title" class="marquee"><span></span></div>
+				<div id="word-list">
+					<div id="words-left"></div>
+					<div id="wL"></div>
+				</div>
+			</div>
+		</div>
+		<div id="board">
+			<div id="edge"></div>
+		</div>
+	</div>
+
+	<div id="dialogs" class="hide">
+
+		<div id="menuContent">
+			<button type="button" class="new_game2"><i class="fa fa-refresh"></i> New Game</button>
+			<button type="button" class="settings"><i class="fa fa-tasks"></i> Settings</button>
+			<!-- li class="achievements"><i class="fa fa-trophy"></i> Achievements</li-->
+			<!-- a class="button" href="https://play.google.com/store/apps/details?id=com.digitalfunmedia.ldsgames" target="_blank"><i class="fa fa-star"></i> Rate</a -->
+			<button type="button" class="help"><i class="fa fa-question-circle"></i> How to Play</button>
+		</div>
+
+		<div id="newGameContent">
+			<fieldset>
+				<div>
+					<input id="hide-word-list" type="checkbox" />
+					<label for="hide-word-list">hide word list (harder)</label>
+				</div>
+				<div>
+					<input id="hide-vowels" type="checkbox" />
+					<label for="hide-vowels">hide vowels (harder)</label>
+				</div>
+				<div>
+					<input id="limit-word-count" type="checkbox" />
+					<label for="limit-word-count">limit word count (easier)</label>
+				</div>
+				<div>
+					<input id="gray-out-non-word-letters" type="checkbox" />
+					<label for="gray-out-non-word-letters">gray out non-word letters (easier)</label>
+				</div>
+				<div>
+					<label for="use-random">word list</label>
+					<select id="use-random">
+						<option value="1">random words</option>
+						<option value="0" selected="selected">use themed words</option>
+					</select>
+				</div>
+				<div>
+					<label for="board-size">puzzle size</label>
+					<select id="board-size">
+						<option value="1">8 x 8</option>
+						<option value="1.5" selected="selected">12 x 12</option>
+						<option value="2">16 x 16</option>
+						<option value="3">24 x 24</option>
+						<option value="4">32 x 32</option>
+					</select>
+				</div>
+				<div>
+					<input id="use-timer" type="checkbox" />
+					<span>
+						<label for="use-timer">timed puzzle:</label>
+						<label> best </label>
+						<span id="best-time">--:--</span>
+						<label> last </label>
+						<span id="last-time">--:--</span>
+					</span>
+				</div>
+			</fieldset>
+		</div>
+
+		<div id="settingsContent">
+			<fieldset>
+				<div>
+					<label>color scheme</label>
+					<select id="color-scheme">
+						<option value="white-on-black">light on dark</option>
+						<option value="black-on-white">dark on light</option>
+					</select>
+				</div>
+				<div>
+					<label for="background-color">background</label>
+					<select id="background-color"></select>
+				</div>
+				<div>
+					<label>layout</label>
+					<select id="layout">
+						<option value="right-handed">right-handed</option>
+						<option value="left-handed">left-handed</option>
+					</select>
+				</div>
+				<div>
+					<input id="show-selected-letter" type="checkbox" />
+					<label for="show-selected-letter">show selected letter</label>
+				</div>
+				<div>
+					<label>highlight style</label>
+					<select id="hilite-style">
+						<option value="silver">silver circled</option>
+						<option value="multi">multi-colored solid</option>
+						<option value="">classic - green circled</option>
+					</select>
+				</div>
+			</fieldset>
+		</div>
+
+	</div>
+
+	<script src="../temples/temples.js"></script>
+	<script src="./js/lds.js"></script>
+	<script src="./js/lds-master.js"></script>
+	<script src="./js/lds-random.js"></script>
+	<script src="./js/word-search.js"></script>
+</body>
+</html>

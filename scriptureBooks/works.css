@@ -1,0 +1,148 @@
+
+* {
+	user-select: none;
+ cbox-sizing: border-box;
+}
+
+
+html, body {
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+	margin: 0;
+	background: black;
+	overflow: auto;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+
+.game_wrapper {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	background: white;
+	max-width: 768px;
+	max-height: 1024px;
+	margin: 0 auto;
+	padding: 10;
+	position: relative;
+}
+
+.icon-menu::after {
+	content: '\02630';
+	font-size: 1em;
+	padding: 0 .25em;
+	line-height: 1em;
+}
+
+
+.app_bar {
+	font-size: 1.5rem;
+	background: blue;
+	color: white;
+	padding: 10px 15px;
+	line-height: 2em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	box-shadow: 0 0 4px black;
+}
+
+.app_bar h1 {
+	padding: 0;
+	margin: 0;
+}
+
+
+.app_bar b {
+	font-size: .5em;
+	line-height: 2em;
+	white-space: nowrap;
+	padding: .5em;
+}
+
+.spacer {
+	width: 100%;
+}
+
+.game-board {
+	flex: 1 1 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.instructions {
+	font-size: 1.25em;
+	text-align: center;
+	height: 3em;
+}
+
+
+.level{
+	font-size: 2em;
+}
+
+.errors {
+	font-size: 1.25em;
+	color: red;
+}
+
+.timer {
+	font-size: 1.5em;
+}
+
+.x-row {
+	display: flex;
+	justify-content: center;
+}
+
+.x-row span {
+	width: 75px;
+	padding: 10px;
+	height: 100px;
+	margin: 10px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	flex-direction: column;
+}
+
+.volume {
+	color: white;
+	background:
+		radial-gradient(black 15%, transparent 16%) 0 0,
+		radial-gradient(black 15%, transparent 16%) 8px 8px,
+		radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+		radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+	background-color:#282828;
+	background-size:16px 16px;
+	box-shadow: 4px 4px 4px grey;
+	border-radius: 4px;
+}
+
+.wrong {
+	box-shadow: 2px 2px 16px 1px red;
+}
+
+.right {
+	box-shadow: 2px 2px 16px 1px green;
+}
+
+
+.x-row .book {
+	background: oldlace;
+	width: 33%;
+}

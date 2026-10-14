@@ -1,0 +1,157 @@
+
+html, body {
+	width: 100%; height: 100vh; /* calc(100vh - 50px); */
+	padding: 0; margin: 0;
+	overflow: hidden;
+	background: gray;
+
+	position: relative;
+	font-size: 20px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+/*
+@media (max-height: 400px) {
+	html, body { height: calc(100vh - 32px); }
+}
+*/
+
+@media (min-height: 720px) {
+	html, body { height: calc(100vh - 40px); }
+}
+
+
+::-webkit-scrollbar {
+	-webkit-appearance: none;
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: rgba(196,196,196,1);
+	-webkit-box-shadow: 0 0 2px rgba(0,0,0,1);
+}
+
+
+.layout-full {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+	background: #eee;
+}
+
+
+.layout-square,
+.layout-square-2 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+	background: silver;
+}
+
+.layout-square nav {
+	width: 100vw;
+	height: calc(100% - 100vw);
+	background: #ccc;
+}
+
+.layout-square-2 nav {
+	width: calc(100vw - (100vh - 50px - 100vw));
+	height: calc(100% - 100vw);
+	background: #ccc;
+}
+
+.layout-square-2 aside {
+	width: calc(100vh - 50px - 100vw);
+	height: calc(100% - 100vw);
+	background: #ddd;
+}
+
+.layout-square article,
+.layout-square-2 article {
+	width: 100vw;
+	height: 100vw;
+	background: #eee;
+}
+
+/* */
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+input, select, button {
+	padding: 1em 2em;
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.text-justify { text-align: justify; }
+
+.form-rows {
+}
+
+.form-rows > div {
+	display: table-row;
+}
+
+.form-rows > div label {
+	display: table-cell;
+	text-align: right;
+	padding: .5em;
+}
+
+.form-rows > div label + input,
+.form-rows > div label + select {
+
+}
+
+
+dialog {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,.5);
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	border: 0;
+}
+
+dialog form {
+	width: -webkit-fit-content;
+	height: -webkit-fit-content;
+	margin: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: white;
+	box-sizing: border-box;
+	max-width: 90vw;
+	max-height: 90vh;
+}
+
+dialog header {
+	padding: 1em;
+	font-weight: bold;
+}
+
+dialog article,
+dialog main {
+	padding: 1em;
+}
+
+dialog footer {
+	text-align: right;
+	padding: 1em;
+}

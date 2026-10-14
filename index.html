@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<title>Latter-day Saint Games</title>
+	<link rel="stylesheet" type="text/css" href="./global.css">
+	<style>
+
+		.askRate {
+			z-index: 1000;
+		}
+
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		@supports (height: 100dvh) {
+			body {
+				height: 100dvh;
+			}
+		}
+
+		.game-books {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-content: flex-start;
+			justify-content: center;
+			position: relative;
+			z-index: 1;
+			flex: none;
+			width: min(100vw, calc(100vh * 4 / 7));
+			height: min(100vh, calc(100vw * 7 / 4));
+			aspect-ratio: 4 / 7;
+			overflow: hidden;
+		}
+
+		.game-books span,
+		.game-books a {
+			display: inline-block;
+			box-sizing: border-box;
+			width: 30%;
+			aspect-ratio: 3 / 4;
+			margin: 1%;
+			padding: 1%;
+			text-align: center;
+			vertical-align: middle;
+			font-size: .8rem;
+			text-decoration: none;
+			color: black;
+			text-shadow: 0 0 1px #888;
+			position: relative;
+		}
+
+		@supports (height: 100dvh) {
+			.game-books {
+				width: min(100vw, calc(100dvh * 4 / 7));
+				height: min(100dvh, calc(100vw * 7 / 4));
+			}
+		}
+
+		.game-books a {
+			background: #ddd;
+			box-shadow: 2px 2px 6px black;
+		}
+
+		.game-books a * {
+			xposition: relative;
+		}
+
+		.game-books a img {
+			xposition: absolute;
+			top: 0; left: 0; bottom: 0; right: 0;
+		}
+
+		.game-books span {
+			font-weight: bold;
+			text-shadow: 1px 1px 3px white;
+		}
+
+		.game-books:after {
+			content: '';
+			background: url(./temples/nZe5RQmY_o.jpg);
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0.5;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			position: absolute;
+			z-index: -1;
+		}
+
+		.game-frame {
+			position: absolute;
+			inset: 0;
+			z-index: 2;
+			display: flex;
+			flex-direction: column;
+			background: #eee;
+		}
+
+		.game-frame[hidden] {
+			display: none;
+		}
+
+		.game-frame header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex: none;
+			min-height: 2.5rem;
+			padding: 0 .75rem;
+			box-sizing: border-box;
+			background: #333;
+			color: white;
+			font-size: .9rem;
+		}
+
+		.game-frame button {
+			padding: .15rem .5rem;
+			border: 0;
+			background: transparent;
+			color: inherit;
+			font-size: 1.5rem;
+			line-height: 1;
+			cursor: pointer;
+		}
+
+		.game-frame iframe {
+			flex: 1;
+			width: 100%;
+			min-height: 0;
+			border: 0;
+			background: white;
+		}
+
+	</style>
+</head>
+<body>
+	<main class="layout-full game-books">
+		<a href="./wordSearch/index.html" data-title="Word Search">
+			<img src="./wordSearch/icon.png" />
+			<strong>Word Search</strong>
+		</a>
+		<a href="./quest/index.html" data-title="Pioneer Quest">
+			<img src="./quest/quest.jpg" />
+			<strong>Pioneer Quest</strong>
+		</a>
+		<a href="./photoPuzzle/index.html" data-title="Photo Puzzles">
+			<img src="./photoPuzzle/icon.png" />
+			<strong>Photo Puzzles</strong>
+		</a>
+		<a href="./crossword/crossword.html" data-title="Gospel Crossword">
+			<img src="./crossword/crossword.jpg" />
+			<strong>Gospel Crossword</strong>
+		</a>
+		<a href="./scramble/letter-scramble.html" data-title="Letter Scramble">
+			<img src="./scramble/letter-scramble.jpg" />
+			<strong>Letter Scramble</strong>
+		</a>
+		<a href="./scriptureBooks/standard_works.html" data-title="Scripture Books">
+			<img src="./scriptureBooks/books.png" />
+			<strong>Scripture Books</strong>
+		</a>
+		<a href="./jigsaws/jigsaws.html" data-title="Jigsaws">
+			<img src="./jigsaws/jigsaws.png" />
+			<strong>Jigsaws</strong>
+		</a>
+		<!-- <a href="./blanks/blanks.html">
+			<img src="./blanks/blanks.jpg" />
+			<strong>Fill in the Blanks</strong>
+		</a> -->
+		<!-- span>
+			More games and puzzles on the way...
+		</span -->
+
+		<section class="game-frame" aria-label="Game" hidden>
+			<header>
+				<strong class="game-frame-title"></strong>
+				<button class="game-frame-close" type="button" aria-label="Close game">&times;</button>
+			</header>
+			<iframe title="Game content"></iframe>
+		</section>
+	</main>
+
+	<dialog>
+		<form>
+			<header>Settings</header>
+			<article>
+				<div>
+					<label></label>
+				</div>
+			</article>
+			<footer>
+				<button type="button">Submit</button>
+			</footer>
+		</form>
+	</dialog>
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="adMobPlus.js"></script>
+
+	<script>
+
+        window.oncontextmenu = function() { return false }
+
+		const gameFrame = document.querySelector('.game-frame')
+		const gameFrameTitle = document.querySelector('.game-frame-title')
+		const gameFrameContent = document.querySelector('.game-frame iframe')
+		let activeGameLink
+
+		document.querySelector('.game-books').addEventListener('click', function(event) {
+			const link = event.target.closest('a[data-title]')
+			if (!link) return
+
+			event.preventDefault()
+			activeGameLink = link
+			gameFrameTitle.textContent = link.dataset.title
+			gameFrameContent.src = link.href
+			gameFrameContent.title = link.dataset.title
+			gameFrame.hidden = false
+		})
+
+		document.querySelector('.game-frame-close').addEventListener('click', function() {
+			gameFrame.hidden = true
+			gameFrameContent.src = 'about:blank'
+			if (activeGameLink) activeGameLink.focus()
+		})
+
+		// var puzzlesCompleted = (localStorage.getItem('puzzlesCompleted') || 0)
+		// localStorage.setItem('puzzlesCompleted', ++puzzlesCompleted)
+		//
+		// if (puzzlesCompleted === 5) {
+		// 	setTimeout(function() {
+		// 		document.getElementsByClassName('askRate')[0].setAttribute('open', true).show()
+		// 	}, 500)
+		// }
+		//
+		// document.getElementsByClassName('skip')[0].addEventListener('click', function() {
+		// 	document.getElementsByClassName('askRate')[0].removeAttribute('open').hide()
+		// })
+
+	</script>
+
+</body>
+</html>
