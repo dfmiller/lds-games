@@ -277,6 +277,7 @@
 		<div class="game-card-grid"></div>
 		<footer class="home-footer">
 			<span>Send feedback to <a href="mailto:digitalfunmedia@gmail.com?subject=LDS%20Games">digitalfunmedia@gmail.com</a></span>
+			<span d="disable-analytics">&nbsp;</span>
 			<span>Temple images provided by <a href="https://www.etsy.com/shop/BringTheTempleHome" target="_blank" rel="noopener noreferrer">Bring The Temple Home</a></span>
 		</footer>
 
@@ -292,7 +293,17 @@
 
 	<script>
 
-        window.oncontextmenu = function() { return false }
+		const disableAnalytics = document.querySelector('#disable-analytics')
+		if (localStorage.getItem('va-disable') === '1') {
+			disableAnalytics.textContent = 'Analytics disabled'
+		}
+
+		document.querySelector('#disable-analytics').addEventListener('click', function() {
+			localStorage.setItem('va-disable','1')
+			alert('Analytics disabled. You may need to reload the page for this to take effect.')
+		})
+
+    window.oncontextmenu = function() { return false }
 
 		const gameFrame = document.querySelector('.game-frame')
 		const gameBackdrop = document.querySelector('.game-backdrop')
