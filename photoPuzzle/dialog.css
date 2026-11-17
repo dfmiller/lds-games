@@ -11,6 +11,7 @@
 		opacity: 1;
 		transform: none;
 		transition: opacity 1s, transform .1ms;
+		z-index: 1000;
 	}
 
 
