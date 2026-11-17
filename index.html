@@ -39,27 +39,250 @@
 			width: 100%;
 			min-height: 100vh;
 			height: auto;
-			padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem);
+			padding: clamp(.75rem, 2vw, 1.5rem) clamp(.5rem, 2vw, 1.5rem);
 			background:
 				linear-gradient(rgba(243, 244, 246, .78), rgba(243, 244, 246, .78)),
 				url(./temples/nZe5RQmY_o.jpg) center / cover fixed;
 		}
 
-		.home-title {
+		/* ---------- Hero carousel ---------- */
+
+		.hero {
 			position: relative;
 			z-index: 1;
 			flex: none;
-			margin: 0;
-			color: #202938;
-			font-size: clamp(2rem, 4vw, 3rem);
-			letter-spacing: -.04em;
+			margin-bottom: clamp(1.75rem, 4vw, 3rem);
+			border-radius: 1.25rem;
+			overflow: hidden;
+			background: #263243;
+			box-shadow: 0 14px 34px rgba(31, 41, 55, .24);
 		}
 
-		.home-subtitle {
-			margin: .35rem 0 1.75rem;
-			color: #687386;
-			font-size: 1rem;
+		.hero-track {
+			display: flex;
+			overflow-x: auto;
+			overflow-y: hidden;
+			scroll-snap-type: x mandatory;
+			scroll-behavior: smooth;
+			scrollbar-width: none;
+			-webkit-overflow-scrolling: touch;
+			overscroll-behavior-x: contain;
 		}
+
+		.hero-track::-webkit-scrollbar {
+			display: none;
+		}
+
+		.hero-slide {
+			position: relative;
+			isolation: isolate;
+			flex: 0 0 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column-reverse;
+			justify-content: flex-end;
+			align-items: flex-start;
+			gap: 1.25rem;
+			min-height: clamp(22rem, 52vw, 29rem);
+			padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem) 3.75rem;
+			scroll-snap-align: start;
+			scroll-snap-stop: always;
+			color: white;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+		}
+
+		.hero-bg {
+			position: absolute;
+			inset: -2rem;
+			z-index: -2;
+			width: calc(100% + 4rem);
+			height: calc(100% + 4rem);
+			max-width: none;
+			max-height: none;
+			object-fit: cover;
+			filter: blur(22px) saturate(1.1);
+		}
+
+		.hero-slide::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			background: linear-gradient(90deg, rgba(12, 18, 30, .86) 0%, rgba(12, 18, 30, .62) 55%, rgba(12, 18, 30, .4) 100%);
+		}
+
+		.hero-copy {
+			max-width: 34rem;
+		}
+
+		.hero-eyebrow {
+			display: inline-block;
+			margin-bottom: .6rem;
+			font-size: .75rem;
+			font-weight: 700;
+			letter-spacing: .12em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, .78);
+		}
+
+		.hero-heading {
+			margin: 0;
+			font-size: clamp(1.9rem, 4.6vw, 3.25rem);
+			line-height: 1.05;
+			letter-spacing: -.035em;
+		}
+
+		.hero-description {
+			margin: .75rem 0 1.4rem;
+			font-size: clamp(1rem, 1.6vw, 1.2rem);
+			line-height: 1.45;
+			color: rgba(255, 255, 255, .9);
+		}
+
+		.hero-play {
+			display: inline-flex;
+			align-items: center;
+			gap: .5rem;
+			padding: .75rem 1.5rem;
+			border-radius: 999px;
+			background: white;
+			color: #202938;
+			font-weight: 700;
+			font-size: 1rem;
+			text-decoration: none;
+			text-shadow: none;
+			box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+			transition: transform .15s ease, box-shadow .15s ease;
+		}
+
+		.hero-play:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 22px rgba(0, 0, 0, .35);
+		}
+
+		.hero-play:focus-visible,
+		.hero-arrow:focus-visible,
+		.hero-dot:focus-visible {
+			outline: 3px solid #ffffff;
+			outline-offset: 3px;
+		}
+
+		.hero-art {
+			flex: none;
+			box-sizing: border-box;
+			width: clamp(6.5rem, 22vw, 18rem);
+			aspect-ratio: 1;
+			border-radius: 1rem;
+			overflow: hidden;
+			background: #1c2433;
+			box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+			border: 3px solid rgba(255, 255, 255, .85);
+		}
+
+		.hero-art img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		@media (min-width: 700px) {
+			.hero-slide {
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: 4rem;
+				padding-left: clamp(4rem, 7vw, 6rem);
+				padding-right: clamp(4rem, 7vw, 6rem);
+			}
+		}
+
+		.hero-arrow {
+			position: absolute;
+			top: 50%;
+			z-index: 2;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			width: 2.75rem;
+			height: 2.75rem;
+			margin-top: -1.375rem;
+			padding: 0;
+			border: 0;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, .18);
+			-webkit-backdrop-filter: blur(6px);
+			backdrop-filter: blur(6px);
+			color: white;
+			font-size: 1.6rem;
+			line-height: 1;
+			cursor: pointer;
+			transition: background .15s ease;
+		}
+
+		.hero-arrow:hover {
+			background: rgba(255, 255, 255, .34);
+		}
+
+		.hero-arrow.prev { left: 1rem; }
+		.hero-arrow.next { right: 1rem; }
+
+		@media (min-width: 700px) {
+			.hero-arrow {
+				display: flex;
+			}
+		}
+
+		.hero-dots {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 1.1rem;
+			z-index: 2;
+			display: flex;
+			justify-content: center;
+			gap: .25rem;
+		}
+
+		.hero-dot {
+			position: relative;
+			width: 1.5rem;
+			height: 1.5rem;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			cursor: pointer;
+		}
+
+		.hero-dot::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: .6rem;
+			height: .6rem;
+			margin: -.3rem 0 0 -.3rem;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, .5);
+			transition: width .25s ease, margin .25s ease, background .25s ease;
+		}
+
+		.hero-dot[aria-current="true"]::after {
+			width: 1.4rem;
+			margin-left: -.7rem;
+			background: white;
+		}
+
+		.section-title {
+			position: relative;
+			z-index: 1;
+			margin: 0 0 1rem;
+			color: #202938;
+			font-size: 1.25rem;
+			letter-spacing: -.02em;
+		}
+
+		/* ---------- Game grid ---------- */
 
 		.game-card-grid {
 			position: relative;
@@ -160,8 +383,13 @@
 
 		@media (prefers-reduced-motion: reduce) {
 			.game-card-grid a,
-			.game-card-grid a img {
+			.game-card-grid a img,
+			.hero-play,
+			.hero-dot::after {
 				transition: none;
+			}
+			.hero-track {
+				scroll-behavior: auto;
 			}
 		}
 
@@ -272,9 +500,15 @@
 </head>
 <body>
 	<main class="layout-full game-books">
-		<h1 class="home-title">LDS Games</h1>
-		<p class="home-subtitle">Games and puzzles</p>
-		<div class="game-card-grid"></div>
+		<section class="hero" aria-roledescription="carousel" aria-label="Featured games">
+			<div class="hero-track" tabindex="-1"></div>
+			<button class="hero-arrow prev" type="button" aria-label="Previous game">&#8249;</button>
+			<button class="hero-arrow next" type="button" aria-label="Next game">&#8250;</button>
+			<div class="hero-dots"></div>
+		</section>
+
+<!-- 		<h2 class="section-title">All games</h2>
+ -->		<div class="game-card-grid"></div>
 		<footer class="home-footer">
 			<span>Send feedback to <a href="mailto:digitalfunmedia@gmail.com?subject=LDS%20Games">digitalfunmedia@gmail.com</a></span>
 			<span id="disable-analytics">&nbsp;</span>
@@ -304,22 +538,22 @@
 
 		const games = [
 			{
-				title: 'Word Search',
+				title: 'Gospel Word Search',
 				href: './wordSearch/index.html',
 				image: './wordSearch/icon.png',
-				description: 'Find hidden words in themed puzzles'
+				description: 'Find hidden words in Gospel themed puzzles'
 			},
 			{
 				title: 'Pioneer Quest',
 				href: './quest/index.html',
 				image: './quest/quest.jpg',
-				description: 'Test your trivia as a pioneer'
+				description: 'Test your trivia as you travel across the plains'
 			},
 			{
-				title: 'Photo Puzzles',
+				title: 'Temple Photo Puzzles',
 				href: './photoPuzzle/index.html',
 				image: './photoPuzzle/icon.png',
-				description: 'Rebuild photos one piece at a time'
+				description: 'Unscramble temple photos to complete the puzzle'
 			},
 			{
 				title: 'Gospel Crossword',
@@ -328,10 +562,10 @@
 				description: 'Test your knowledge with crosswords'
 			},
 			{
-				title: 'Letter Scramble',
+				title: 'Gospel Letter Scramble',
 				href: './scramble/letter-scramble.html',
 				image: './scramble/letter-scramble.jpg',
-				description: 'Unscramble words and phrases'
+				description: 'Unscramble Gospel related words and phrases'
 			},
 			{
 				title: 'Scripture Books',
@@ -340,12 +574,14 @@
 				description: 'Learn the books of scripture'
 			},
 			{
-				title: 'Jigsaws',
+				title: 'Temple Jigsaws',
 				href: './jigsaws/jigsaws.html',
 				image: './jigsaws/jigsaws.png',
 				description: 'Piece together temple scenes'
 			}
 		]
+
+		/* ---------- Game grid ---------- */
 
 		const gameCardGrid = document.querySelector('.game-card-grid')
 		games.forEach(function(game) {
@@ -367,6 +603,147 @@
 			link.append(image, title, description)
 			gameCardGrid.append(link)
 		})
+
+		/* ---------- Hero carousel ---------- */
+
+		const hero = document.querySelector('.hero')
+		const heroTrack = hero.querySelector('.hero-track')
+		const heroDots = hero.querySelector('.hero-dots')
+		const heroSlides = []
+		const heroDotButtons = []
+		let heroIndex = 0
+		let heroTimer
+		let heroPaused = false
+		const heroInterval = 6000
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+		games.forEach(function(game, i) {
+			const slide = document.createElement('div')
+			slide.className = 'hero-slide'
+			slide.setAttribute('role', 'group')
+			slide.setAttribute('aria-roledescription', 'slide')
+			slide.setAttribute('aria-label', (i + 1) + ' of ' + games.length)
+
+			const bg = document.createElement('img')
+			bg.className = 'hero-bg'
+			bg.src = game.image
+			bg.alt = ''
+			bg.setAttribute('aria-hidden', 'true')
+
+			const copy = document.createElement('div')
+			copy.className = 'hero-copy'
+
+			const eyebrow = document.createElement('span')
+			eyebrow.className = 'hero-eyebrow'
+			eyebrow.textContent = 'Play now'
+
+			const heading = document.createElement('h2')
+			heading.className = 'hero-heading'
+			heading.textContent = game.title
+
+			const description = document.createElement('p')
+			description.className = 'hero-description'
+			description.textContent = game.description
+
+			const play = document.createElement('a')
+			play.className = 'hero-play'
+			play.href = game.href
+			play.dataset.title = game.title
+			play.textContent = 'Play ' + game.title + ' \u2192'
+
+			copy.append(eyebrow, heading, description, play)
+
+			const art = document.createElement('div')
+			art.className = 'hero-art'
+			const artImage = document.createElement('img')
+			artImage.src = game.image
+			artImage.alt = ''
+			if (i > 0) artImage.loading = 'lazy'
+			art.append(artImage)
+
+			slide.append(bg, copy, art)
+			heroTrack.append(slide)
+			heroSlides.push(slide)
+
+			const dot = document.createElement('button')
+			dot.type = 'button'
+			dot.className = 'hero-dot'
+			dot.setAttribute('aria-label', 'Show ' + game.title)
+			dot.addEventListener('click', function() { goToSlide(i) })
+			heroDots.append(dot)
+			heroDotButtons.push(dot)
+		})
+
+		function updateActiveSlide(index) {
+			heroIndex = index
+			heroSlides.forEach(function(slide, i) {
+				const active = i === index
+				const playLink = slide.querySelector('.hero-play')
+				playLink.tabIndex = active ? 0 : -1
+				slide.setAttribute('aria-hidden', active ? 'false' : 'true')
+				heroDotButtons[i].setAttribute('aria-current', active ? 'true' : 'false')
+			})
+		}
+
+		function goToSlide(index) {
+			const count = games.length
+			const next = (index + count) % count
+			heroTrack.scrollTo({ left: next * heroTrack.clientWidth })
+			updateActiveSlide(next)
+		}
+
+		let scrollFrame
+		heroTrack.addEventListener('scroll', function() {
+			cancelAnimationFrame(scrollFrame)
+			scrollFrame = requestAnimationFrame(function() {
+				const width = heroTrack.clientWidth
+				if (!width) return
+				const index = Math.round(heroTrack.scrollLeft / width)
+				if (index !== heroIndex) updateActiveSlide(index)
+			})
+		})
+
+		window.addEventListener('resize', function() {
+			heroTrack.style.scrollBehavior = 'auto'
+			heroTrack.scrollLeft = heroIndex * heroTrack.clientWidth
+			heroTrack.style.scrollBehavior = ''
+		})
+
+		hero.querySelector('.hero-arrow.prev').addEventListener('click', function() { goToSlide(heroIndex - 1) })
+		hero.querySelector('.hero-arrow.next').addEventListener('click', function() { goToSlide(heroIndex + 1) })
+
+		hero.addEventListener('keydown', function(event) {
+			if (event.key === 'ArrowLeft') { goToSlide(heroIndex - 1) }
+			else if (event.key === 'ArrowRight') { goToSlide(heroIndex + 1) }
+		})
+
+		function startHeroTimer() {
+			stopHeroTimer()
+			if (reducedMotion.matches) return
+			heroTimer = setInterval(function() {
+				if (heroPaused || document.hidden || document.body.classList.contains('game-open')) return
+				goToSlide(heroIndex + 1)
+			}, heroInterval)
+		}
+
+		function stopHeroTimer() {
+			clearInterval(heroTimer)
+		}
+
+		function pauseHero() { heroPaused = true }
+		function resumeHero() { heroPaused = false; startHeroTimer() }
+
+		hero.addEventListener('mouseenter', pauseHero)
+		hero.addEventListener('mouseleave', resumeHero)
+		hero.addEventListener('focusin', pauseHero)
+		hero.addEventListener('focusout', resumeHero)
+		hero.addEventListener('touchstart', pauseHero, { passive: true })
+		hero.addEventListener('touchend', function() { setTimeout(resumeHero, heroInterval) }, { passive: true })
+
+		updateActiveSlide(0)
+		startHeroTimer()
+
+		/* ---------- Game modal ---------- */
 
 		document.querySelector('.game-books').addEventListener('click', function(event) {
 			const link = event.target.closest('a[data-title]')
