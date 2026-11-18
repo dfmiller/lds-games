@@ -1,7 +1,8 @@
 buildQuestions({
 	prefix:	"Who ",
 	qs:{
-//		"is the current (17th) president of the church (2018 - present)": "Russell M. Nelson",
+		"is the current president of the church (2025 - present)": "Dallin H. Oaks",
+		"was the 17th president of the church (2018 - 2025)": "Russell M. Nelson",
 		"was the 16th president of the church (2008 - 2018)": "Thomas S. Monson",
 		"was the 15th president of the church (1995 - 2008)": "Gordon B. Hinckley",
 		"was the 14th president of the church (1994 - 1995)": "Howard W. Hunter",
@@ -17,6 +18,6 @@ buildQuestions({
 		"was the 4th president of the church (1889 - 1898)": "Wilford Woodruff",
 		"was the 3rd president of the church (1880 - 1887)": "John Taylor",
 		"was the 2nd president of the church (1847 - 1877)": "Brigham Young",
-		"was the 1st president of the church (1830 - 1844)": "Joseph Smith Jr."
+		"was the 1st president of the church (1832 - 1844)": "Joseph Smith Jr."
 	}
 })
