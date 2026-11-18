@@ -352,7 +352,7 @@
 		var url = SEARCH_URL + encodeURIComponent(query);
 
 		showCard('Telegraph a Friend',
-			'<p class="phone">\u2709 <strong>' + friend + '</strong> is looking it up\u2026</p>' +
+			'<p class="phone"><strong>' + friend + '</strong> is looking it up\u2026</p>' +
 			'<div class="lookup"><iframe src="' + url + '" title="churchofjesuschrist.org search" referrerpolicy="no-referrer"></iframe></div>' +
 			'<p class="hint">If the page above stays blank, the website may not allow itself to be shown here. ' +
 			'<a href="' + url + '" target="_blank" rel="noopener">Open the search in a new tab</a> instead.</p>' +
@@ -434,8 +434,7 @@
 		var leg = legs[0];
 		setMap(leg);
 		showCard('Pioneer Quest', leg.text +
-			'<div class="rules"><p><strong>How it works:</strong> 15 questions, each worth more than the last. Reach question 5 or 10 and that prize is safe. ' +
-			'Use your lifelines wisely, and walk away any time to keep what you’ve won.</p></div>',
+			'<p class="hint">Answer the questions to reach your destination. You may use each lifeline once at any time.</p>',
 			'Start', function () { drawQuestion(0); renderQuestion(); });
 		// blank the board behind the intro card
 		el.question.textContent = '…';
