@@ -234,6 +234,21 @@
 	.aud .lt { margin-top: 4px; font-family: var(--sc-font); color: var(--red); font-size: 18px; }
 	.aud .bar.gone { opacity: .35; }
 
+	.amt {
+		color: transparent;
+		border-bottom: 4px solid dimgray;
+		margin-bottom: -4px;
+	}
+
+	.current .amt,
+	.done .amt {
+		color: inherit;
+		border-bottom: none;
+		margin-bottom: 0;
+	}
+
+
+
 	/* ---------- phones ---------- */
 	@media (max-width: 760px) {
 		.answers { grid-template-columns: 1fr; gap: 8px; }
@@ -325,25 +340,7 @@
 	</div>
 </div>
 
-<script src="./quest.js"></script>
-
-<script src="./_words.js"></script>
-<script src="./_dates.js"></script>
-<script src="./_books.js"></script>
-<script src="./_aof.js"></script>
-<script src="./_places.js"></script>
-<script src="./_leaders.js"></script>
-<script src="./_ldprophets.js"></script>
-<script src="./_nthpresident.js"></script>
-<script src="./_hymns.js"></script>
-<script src="./_women.js"></script>
-<script src="./_temples.js"></script>
-<script src="./_commandments.js"></script>
-<script src="./_glory.js"></script>
-
-<script>
-	Quest.init()
-</script>
+<script type="module" src="./js/quest.js"></script>
 
 </body>
 </html>
