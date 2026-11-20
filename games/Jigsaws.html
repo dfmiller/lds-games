@@ -91,6 +91,7 @@ button:focus-visible{outline:3px solid var(--mine);outline-offset:2px}
 <div id="hw" role="dialog" aria-modal="true" aria-labelledby="ht"><div class="box"><h2 id="ht">How to play</h2><div class="hp" id="hc"></div><button id="hx">Got it</button></div></div>
 <div id="pk" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="box"><h2 id="pt">Choose picture</h2><p>Picking a picture starts a new game.</p><div id="pg"></div><p style="margin:12px 0 0">Images provided by <a href="https://www.etsy.com/shop/BringTheTempleHome" target="_blank" rel="noopener">Bring The Temple Home</a></p><button id="px">Close</button></div></div>
 <div id="ov"><div><h2 id="ot"></h2><p id="op"></p><span class="row" id="lvls"></span><span class="row"><button id="oc" class="alt">Keep Playing</button></span></div></div>
+<script src="./temples/backgrounds.js"></script>
 <script>
 /* =====================================================================
    GAME DEFINITION: Jigsaws Unlimited (canvas board, drag pieces)
@@ -107,29 +108,7 @@ Object.assign(IC,{
   shuf:'<path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>'
 });
 /* Pictures live in a temples/ folder next to this file. */
-const TEMPLES = {
-	'meridian_idaho.jpg': 'Meridian, Idaho Temple',
-	'star_valley_wy.jpg': 'Star Valley, Wyoming Temple',
-    'city_center_spring.jpg': 'Provo City Center, Utah Temple',
-    'mt_timp_spring.jpg': 'Mount Timpanogos, Utah Temple',
-    'jordan_river_spring.jpg': 'Jordan River, Utah Temple',
-	'city_center_statue.jpg': 'Provo City Center, Utah Temple',
-	'salt_lake_night.jpg': 'Salt Lake City, Utah Temple',
-	'payson.jpg': 'Payson, Utah Temple',
-    'provo_flowers.jpg': 'Provo, Utah Temple',
-	'oquirrh_mtn.jpg': 'Oquirrh Mountain, Utah Temple',
-	'mount_timp.jpg': 'Mount Timpanogos, Utah Temple',
-    'bountiful.jpg': 'Bountiful, Utah Temple',
-    'brigham_city.jpg': 'Brigham City, Utah Temple',
-    'cedar_city.jpg': 'Cedar City, Utah Temple',
-    'draper.jpg': 'Draper, Utah Temple',
-    'idaho_falls.jpg': 'Idaho Falls, Idaho Temple',
-    'jordan_river.jpg': 'Jordan River, Utah Temple',
-    'logan.jpg': 'Logan, Utah Temple',
-    'ogden.jpg': 'Ogden, Utah Temple',
-    'provo.jpg': 'Provo, Utah Temple',
-    'rexburg.jpg': 'Rexburg, Idaho Temple',
-}
+const TEMPLES = window.TEMPLES
 const NAMES=TEMPLES,FILES=Object.keys(TEMPLES);
 const TRAY=.3,LV=[2,3,5,7];            // tray height under the picture; pieces-per-side setting for each level
 const rnd=(a,b)=>a+Math.random()*(b-a),r4=v=>Math.round(v*1e4)/1e4;
@@ -144,7 +123,8 @@ function loadImg(path,cb){
   const im=new Image();
   im.onload=()=>{imgEl=im;imgPath=path;cb(im)};
   im.onerror=()=>cb(null);
-  im.src='../temples/'+path;
+  im.src='./temples/'+path;
+  console.log(im.src)
 }
 function build(st,im){
   const[,,sw,sh]=cropRect(im.naturalWidth,im.naturalHeight);
@@ -289,10 +269,11 @@ function openPick(){
   const g=document.getElementById('pg');g.innerHTML='';
   FILES.forEach(f=>{
     const b=document.createElement('button'),im=new Image();
-    im.loading='lazy';im.src='../temples/'+f;im.alt=NAMES[f];b.title=NAMES[f];b.setAttribute('aria-label',NAMES[f]);
+    im.loading='lazy';im.src='./temples/'+f;im.alt=NAMES[f];b.title=NAMES[f];b.setAttribute('aria-label',NAMES[f]);
     if(S&&f===S.img)b.className='cur';
     b.onclick=()=>{pk.classList.remove('show');pending=f;newGame()};
     b.append(im);g.append(b);
+    console.log(im.src)
   });
   pk.classList.add('show');
 }
@@ -317,6 +298,7 @@ const G={
   ],
   help:'<p>Drag each piece to where it belongs in the picture.</p><ul><li>A piece locks in place when it is close to its spot.</li><li>While you drag, the other pieces fade so you can see the outlines.</li><li><b>Preview</b> shows the finished picture; tap it to hide it.</li><li><b>Clear board</b> sweeps loose pieces down to the tray, and <b>Scatter pieces</b> spreads them back over the picture.</li><li>Easy has 12 pieces, Medium 24, Hard 48 and Expert 88. Every new game uses the next picture.</li></ul>',
   newState(level){
+    console.log({ level })
     let f='';
     if(pending&&FILES.includes(pending))f=pending;
     else if(FILES.length){let last='';try{last=localStorage.getItem('jigsaws-img')||''}catch(e){}f=FILES[(FILES.indexOf(last)+1)%FILES.length]}

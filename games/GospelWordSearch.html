@@ -28,7 +28,7 @@ h1{margin:0;font-size:20px;font-weight:800;letter-spacing:-.02em}
 #tm,#ms{display:inline-block}#ms{transform-origin:right center}
 .pop{animation:pop2 .9s}@keyframes pop2{0%,100%{transform:scale(1)}30%{transform:scale(2.5)}}
 #board{position:relative;display:grid;aspect-ratio:var(--ar,1);width:100%;background:var(--glass);border:2.5px solid var(--bold);border-radius:6px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
-.c{position:relative;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--mine);font:inherit;font-size:min(calc((100vw - 24px)*.55/var(--n,10)),calc(456px*.55/var(--n,10)));user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;font-weight:600;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;min-width:0}
+.c{position:relative;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:min(calc((100vw - 24px)*.55/var(--n,10)),calc(456px*.55/var(--n,10)));user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;font-weight:600;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;min-width:0}
 .c.rb{border-right:2.5px solid var(--bold)}.c.bb{border-bottom:2.5px solid var(--bold)}.c.re{border-right:0}.c.be{border-bottom:0}
 /* Cell state classes returned by G.cell(): add your own below */
 .c.sel{background:var(--sel);color:var(--ink)}.c.p{background:var(--peer)}.c.s2{background:var(--same)}
@@ -96,7 +96,7 @@ main{max-width:none;padding:14px 16px 20px}
 <div id="hw" role="dialog" aria-modal="true" aria-labelledby="ht"><div class="box"><h2 id="ht">How to play</h2><div class="hp" id="hc"></div><button id="hx">Got it</button></div></div>
 <canvas id="fw"></canvas>
 <div id="ov"><div><h2 id="ot"></h2><p id="op"></p><span class="lab">Challenges</span><span class="row" id="chs"></span><span class="lab l2">Size</span><span class="row" id="lvls"></span><span class="row"><button id="oc" class="alt">Keep Playing</button></span></div></div>
-<script src="backgrounds.js"></script>
+<script src="./temples/backgrounds.js"></script>
 <script>
 /* =====================================================================
    GAME DEFINITION: the only part you edit for a new game.

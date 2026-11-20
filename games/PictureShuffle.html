@@ -86,6 +86,7 @@ button:focus-visible{outline:3px solid var(--mine);outline-offset:2px}
 <div id="pw" role="dialog" aria-modal="true"></div>
 <div id="hw" role="dialog" aria-modal="true" aria-labelledby="ht"><div class="box"><h2 id="ht">How to play</h2><div class="hp" id="hc"></div><button id="hx">Got it</button></div></div>
 <div id="ov"><div><h2 id="ot"></h2><p id="op"></p><span class="row" id="lvls"></span><span class="row"><button id="oc" class="alt">Keep Playing</button></span></div></div>
+<script src="./temples/backgrounds.js"></script>
 <script>
 /* =====================================================================
    GAME DEFINITION: the only part you edit for a new game.
@@ -97,10 +98,7 @@ const IC={reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',plus
 const IMGICO='<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/>',EYE='<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>';
 let IMG='';
 /* Add your image paths here (relative paths or full URLs). New games use them in order. */
-const PICS=[
-  'pictures/bountiful.jpg',
-  'pictures/brigham_city.jpg',
-].sort((a, b)=>a.localeCompare(b));
+const PICS=(Array.isArray(window.BACKGROUNDS)&&window.BACKGROUNDS.length)?window.BACKGROUNDS:null;
 let usr=0,mv=null,CR=[0,0,1,1],idx=0;
 try{idx=+localStorage.getItem('picpuzzle-idx')||0}catch(e){}
 function setImg(u,f,cr){usr=f?1:0;CR=cr||[0,0,1,1];IMG=u;$('#board').style.setProperty('--img','url("'+u.replace(/"/g,'%22')+'")');

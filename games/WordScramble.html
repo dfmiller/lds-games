@@ -65,16 +65,13 @@ button:focus-visible{outline:3px solid var(--mine);outline-offset:2px}
 <div id="tray"></div>
 <p id="st"></p>
 </main>
-<div id="hw"><div class="box"><h2>How to play</h2><div class="hp"><p>A famous quotation is hidden in the blanks.</p><ul><li>Drag a colored letter onto a blank, or tap a letter and then tap a blank.</li><li>A correct letter turns black and locks in place.</li><li>A wrong spot leaves the letter where you dropped it.</li><li>Stuck? Use <b>Hint</b> in the menu.</li></ul></div><button id="hx">Got it</button></div></div>
+<div id="hw"><div class="box"><h2>How to play</h2><div class="hp"><p>A Gospel related phrase is hidden in the blanks.</p><ul><li>Drag a colored letter onto a blank, or tap a letter and then tap a blank.</li><li>A correct letter turns black and locks in place.</li><li>A wrong spot leaves the letter where you dropped it.</li><li>Stuck? Use <b>Hint</b> in the menu.</li></ul></div><button id="hx">Got it</button></div></div>
 <div id="ov"><div class="box"><h2 id="ot"></h2><p id="op"></p><div class="row" id="lvls"></div><button id="nx">Next</button><button id="oc">Keep playing</button></div></div>
-<script src="quotes.js"></script>
+<script src="phrases.js"></script>
 <script>
 const LV=['Short','Medium','Long'];
 const KW={I:.42,J:.62,L:.7,F:.72,T:.8,W:1.15,M:1.05,N:.9,O:.92,Q:.92,G:.9,D:.9,H:.9};
-const Q=[
-[["I think, therefore I am.","René Descartes"],["Well done is better than well said.","Benjamin Franklin"],["All that glitters is not gold.","William Shakespeare"],["Actions speak louder than words.","Proverb"],["Knowledge is power.","Francis Bacon"]],
-[["The only thing we have to fear is fear itself.","Franklin D. Roosevelt"],["That which does not kill us makes us stronger.","Friedrich Nietzsche"],["It always seems impossible until it is done.","Nelson Mandela"],["Do what you can, with what you have, where you are.","Theodore Roosevelt"],["To be, or not to be, that is the question.","William Shakespeare"]],
-[["The journey of a thousand miles begins with a single step.","Lao Tzu"],["Be the change that you wish to see in the world.","Mahatma Gandhi"],["Ask not what your country can do for you, ask what you can do for your country.","John F. Kennedy"],["We hold these truths to be self-evident, that all men are created equal.","Thomas Jefferson"],["Float like a butterfly, sting like a bee.","Muhammad Ali"]]];
+const Q=[];
 const QS=[].concat(...(window.QUOTES&&window.QUOTES.length?[window.QUOTES]:Q)).map(q=>Array.isArray(q)?q:[q,'']).sort((a,b)=>a[0].replace(/[^A-Za-z]/g,'').length-b[0].replace(/[^A-Za-z]/g,'').length);
 let done=[];try{done=JSON.parse(localStorage.getItem('quote-done'))||[]}catch(e){}
 const $=s=>document.querySelector(s),fmt=s=>(s/60|0)+':'+String(s%60).padStart(2,'0');
@@ -85,7 +82,7 @@ function setup(){L=[...S.q[0]].filter(c=>/[A-Za-zÀ-ÿ]/.test(c)).map(c=>c.toUpp
 function build(){
   const qb=$('#qb');qb.innerHTML='';let n=0;
   const ws=S.q[0].replace(/\.$/,'').split(' ');ws.forEach((w,wi)=>{const d=document.createElement('div');d.className='w';
-    [...((wi==0?'“':'')+w+(wi==ws.length-1?'”':''))].forEach(c=>{if(/[A-Za-zÀ-ÿ]/.test(c)){const i=n++,b=document.createElement('button');b.className='s';b.dataset.i=i;b.style.width='calc(var(--u,24px)*'+(KW[L[i]]||.84)+')';
+    [...((wi==0?'':'')+w+(wi==ws.length-1?'':''))].forEach(c=>{if(/[A-Za-zÀ-ÿ]/.test(c)){const i=n++,b=document.createElement('button');b.className='s';b.dataset.i=i;b.style.width='calc(var(--u,24px)*'+(KW[L[i]]||.84)+')';
       b.setAttribute('aria-label','Blank '+(i+1));b.onclick=()=>{if(sel!=null&&!over)place(sel,i)};d.append(b)}
       else{const p=document.createElement('span');p.className='p';p.textContent=c;d.append(p)}});
     qb.append(d)});
@@ -97,7 +94,7 @@ function draw(){
   const t=$('#tray');t.innerHTML='';t.style.height=(S.th||200)+'px';
   S.tray.forEach(o=>{const b=document.createElement('button');b.className='t'+(sel===o.id?' sel':'');b.dataset.id=o.id;
     b.textContent=L[o.id];b.style.color=col(L[o.id]);b.style.left=o.x+'px';b.style.top=o.y+'px';b.style.transform='rotate('+o.r+'deg)';b.style.zIndex=o.z||1;t.append(b)});
-  $('#ms').textContent=S.fill.filter(x=>!x).length;$('#ti').textContent='Quote '+(S.n+1);
+  $('#ms').textContent=S.fill.filter(x=>!x).length;$('#ti').textContent='Round '+(S.n+1);
   $('#st').textContent='';
 }
 function place(id,i){
