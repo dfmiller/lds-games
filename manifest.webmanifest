@@ -2,7 +2,7 @@
   "id": "./",
   "name": "LDS Games",
   "short_name": "LDS Games",
-  "description": "Browse our apps and open any of them in a new tab.",
+  "description": "Gospel themed games and puzzles",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
