@@ -62,8 +62,8 @@ const APPS = [
   },
   {
     name: "Gospel Letter Scramble",
-    tagline: "tag line",
-    description: "description",
+    tagline: "Unscramble Gospel related words and phrases",
+    description: "",
     cta: "Play game",
     url: "games/WordScramble.html",
     image: "images/quotequest.png",
@@ -74,8 +74,8 @@ const APPS = [
   },
   {
     name: "Scripture Books",
-    tagline: "tag line",
-    description: "description",
+    tagline: "Match each book of scripture with it's standard work",
+    description: "Learn the books of scripture",
     cta: "Play game",
     url: "games/StandardWorks.html",
     image: "images/standardworks.png",
@@ -83,19 +83,18 @@ const APPS = [
 
     background: "#4a3f2b",
     accent: "#d35400",
-    tags: ["action", "strategy", "maze"]
+    tags: ["action"]
   },
   {
-    name: "Jigsaw",
-    tagline: "tag line",
-    description: "description",
+    name: "Temple Jigsaws",
+    tagline: "Piece together temple scenes",
+    description: "Drag pieces into place with four difficulty levels, with a different cut every game",
     cta: "Play game",
     url: "games/Jigsaws.html",
     image: "images/jigsaws.png",
     imageAlt: "alt tag",
-
     background: "#1a1a2e",
     accent: "#00bcd4",
-    tags: ["adventure", "exploration", "space"]
+    tags: ["jigsaw", "puzzle", "temples", "relaxing", "casual", "drag and drop", "photo", "brain game"]
   },
 ].reverse(); // Show the most recently added apps first
