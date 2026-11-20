@@ -77,7 +77,7 @@ const APPS = [
     tagline: "tag line",
     description: "description",
     cta: "Play game",
-    url: "scriptureBooks/standard_works.html",
+    url: "games/StandardWorks.html",
     image: "images/game.png",
     imageAlt: "alt tag",
 
@@ -90,7 +90,7 @@ const APPS = [
     tagline: "tag line",
     description: "description",
     cta: "Play game",
-    url: "jigsaws/jigsaws.html",
+    url: "games/Jigsaws.html",
     image: "images/game.png",
     imageAlt: "alt tag",
 
