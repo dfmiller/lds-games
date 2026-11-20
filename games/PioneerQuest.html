@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pioneer Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Rye&display=swap" rel="stylesheet">
+<style>
+	:root {
+		--paper: #ecdcb4;
+		--paper-lt: #f5ebcf;
+		--paper-dk: #d8c294;
+		--ink: #33200f;
+		--ink-soft: #6b4e2e;
+		--rule: #5a3d1e;
+		--red: #8a1f14;
+		--green: #3b6a2c;
+		--ochre: #d9a441;
+		--brass-hi: #ecd28a;
+		--brass-lo: #9c7424;
+		--body-font: 'IM Fell English', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+		--sc-font: 'IM Fell English SC', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+		--display-font: 'Rye', 'IM Fell English SC', Georgia, serif;
+		--grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+	}
+	* { box-sizing: border-box; }
+	html, body { margin: 0; height: 100%; font-size: 24px ; }
+	body {
+		font-family: var(--body-font);
+		color: var(--ink);
+		background: #2a1a0c;
+		overflow: hidden;
+	}
+	button { font: inherit; color: inherit; cursor: pointer; }
+	button:disabled { cursor: default; }
+
+	/* ---------- the parchment, with a faint sepia map beneath ---------- */
+	.stage {
+		position: fixed; inset: 0;
+		background-color: var(--paper);
+		display: flex; flex-direction: column;
+	}
+	.stage::before {            /* the map, printed in sepia */
+		content: ''; position: absolute; inset: 0;
+		background-size: cover; background-position: center;
+		filter: sepia(1) saturate(.8) contrast(.85);
+		opacity: .26;
+		mix-blend-mode: multiply;
+	}
+	.stage.tokirtland::before { background-image: url(./tokirtland.jpg); }
+	.stage.tomissouri::before { background-image: url(./tomissouri.jpg); }
+	.stage.tosaltlake::before { background-image: url(./tosaltlake.jpg); }
+	.stage.tothewest::before  { background-image: url(./tothewest.jpg); }
+	.stage::after {             /* grain + darkened, foxed edges */
+		content: ''; position: absolute; inset: 0; pointer-events: none;
+		background: var(--grain), radial-gradient(ellipse at center, transparent 55%, rgba(92,56,16,.38) 100%);
+	}
+	.stage > * { position: relative; z-index: 1; }
+
+	/* ---------- layout ---------- */
+	.game { flex: 1; display: flex; min-height: 0; }
+	.main {
+		flex: 1; min-width: 0;
+		display: flex; flex-direction: column;
+		padding: max(10px, env(safe-area-inset-top)) 16px max(10px, env(safe-area-inset-bottom));
+		gap: 8px;
+	}
+
+	.masthead { text-align: center; }
+	.masthead h1 {
+		margin: 0; font-family: var(--display-font); font-weight: normal;
+		font-size: clamp(22px, 4vw, 34px); letter-spacing: .06em; color: var(--ink);
+		text-shadow: 1px 1px 0 rgba(255,255,255,.35);
+	}
+	.rule { display: flex; align-items: center; gap: 10px; color: var(--ink-soft); font-size: 14px; }
+	.rule::before, .rule::after { content: ''; flex: 1; height: 5px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+
+	/* ---------- top bar ---------- */
+	.topbar { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: space-between; }
+	.lifelines { display: flex; gap: 24px; }
+	.ll {
+		min-width: 64px; height: 58px; padding: 0 6px; border-radius: 50%;
+		border: 2px solid var(--brass-lo); outline: 2px solid var(--rule); outline-offset: 1px;
+		background: radial-gradient(circle at 35% 30%, var(--brass-hi), var(--brass-lo) 95%);
+		color: var(--ink);
+		font-family: var(--sc-font); font-size: 1rem; line-height: 1.05; text-align: center;
+		display: flex; align-items: center; justify-content: center; flex-direction: column;
+		position: relative; transition: transform .1s;
+		box-shadow: 0 2px 4px rgba(51,32,15,.45), inset 0 1px 2px rgba(255,255,255,.5);
+	}
+	.ll small { font-size: 16px; letter-spacing: .02em; }
+	.ll:not(:disabled):hover { transform: scale(1.07); }
+	.ll.used { filter: grayscale(1) brightness(.85); opacity: .6; }
+	.ll.used::after {           /* struck through with a pen stroke */
+		content: ''; position: absolute; left: 6%; right: 6%; top: 50%; height: 2px;
+		background: var(--red); transform: rotate(-24deg);
+	}
+	.ll:disabled:not(.used) { opacity: .6; }
+
+	.topright { display: flex; gap: 8px; align-items: center; }
+	.pill {
+		border: 1px solid var(--rule); background: var(--paper-lt); color: var(--ink);
+		padding: 5px 12px; font-family: var(--sc-font); font-size: 1rem;
+		box-shadow: 1px 1px 0 var(--rule);
+	}
+	.pill:not(:disabled):hover { background: var(--paper-dk); }
+	.pill:disabled { opacity: .45; }
+	#ladderToggle { display: none; }
+
+	/* ---------- status ---------- */
+	.status { text-align: center; line-height: 1.2; }
+	.status .leg { font-family: var(--sc-font); font-size: 1rem; letter-spacing: .12em; color: var(--red); }
+	.status .prize { font-family: var(--sc-font); font-size: clamp(20px, 4.4vw, 30px); }
+	.status .qnum { font-size: 1rem; font-style: italic; color: var(--ink-soft); }
+
+	/* ---------- question & answers ---------- */
+	.board { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 0; overflow-y: auto; padding: 4px 2px; }
+
+	.framed {
+		position: relative;
+		background: var(--paper-lt);
+		border: 3px double var(--rule);
+		box-shadow: 0 2px 6px rgba(51,32,15,.35), inset 0 0 18px rgba(139,94,40,.22);
+	}
+	.hex {
+		padding: 18px 34px;
+		font-size: clamp(1rem, 3.2vw, 32px);
+		text-align: center; line-height: 1.3;
+	}
+	.hex::before, .hex::after {
+		content: '\2766'; position: absolute; top: 50%; transform: translateY(-50%);
+		color: var(--red); font-size: 22px;
+	}
+	.hex::before { left: 8px; }
+	.hex::after  { right: 8px; transform: translateY(-50%) scaleX(-1); }
+
+	.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+	.answer {
+		display: block; width: 100%; text-align: left; padding: 0;
+		background: var(--paper-lt);
+		border: 2px solid var(--rule);
+		box-shadow: 2px 2px 0 var(--rule);
+		transition: background .15s, transform .05s;
+	}
+	.answer .in {
+		display: flex; gap: 10px; align-items: baseline;
+		min-height: 52px; padding: 9px 16px; align-items: center;
+		font-size: clamp(1rem, 2.6vw, 32px); line-height: 1.2;
+	}
+	.answer .ltr { color: var(--red); font-family: var(--sc-font); font-size: 1.15em; }
+	.answer:not(:disabled):hover { background: var(--paper-dk); }
+	.answer:not(:disabled):active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--rule); }
+	.answer.selected { background: var(--ochre); }
+	.answer.selected .ltr { color: var(--ink); }
+	.answer.correct { background: var(--green); color: var(--paper-lt); }
+	.answer.correct .ltr { color: var(--paper-lt); }
+	.answer.wrong { background: var(--red); color: var(--paper-lt); }
+	.answer.wrong .ltr { color: var(--paper-lt); }
+	.answer.wrong .txt { text-decoration: line-through; }
+	.answer.pulse .in { animation: pulse .5s infinite alternate; }
+	.answer.correct { animation: flash .35s 3; }
+	.answers.locked .answer:not(.selected):not(.correct) { opacity: .7; }
+	@keyframes pulse { from { filter: brightness(1); } to { filter: brightness(1.18); } }
+	@keyframes flash { 50% { filter: brightness(1.35); } }
+
+	/* ---------- confirm / result bars ---------- */
+	.bar-msg {
+		background: var(--paper-lt); border: 3px double var(--rule);
+		padding: 10px 14px; text-align: center; font-size: 1rem;
+		display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap;
+	}
+	.bar-msg[hidden] { display: none; }
+	.bar-msg.good { border-color: var(--green); }
+	.bar-msg .msg, .bar-msg .q { flex: 1 1 220px; }
+	.btn {
+		display: inline-block; text-decoration: none; text-align: center;
+		border: 2px solid var(--rule); background: var(--paper-lt); color: var(--ink);
+		padding: 7px 18px; font-family: var(--sc-font); font-size: 1rem; letter-spacing: .03em;
+		box-shadow: 2px 2px 0 var(--rule);
+	}
+	.btn:hover { background: var(--paper-dk); }
+	.btn.primary { background: var(--red); color: var(--paper-lt); border-color: #4d0f08; }
+	.btn.primary:hover { background: #a42818; }
+
+	/* ---------- the trail (progress) ---------- */
+	.ladder-panel {
+		width: 248px; flex-shrink: 0;
+		background: rgba(245,235,207,.82); border-left: 4px double var(--rule);
+		padding: max(10px, env(safe-area-inset-top)) 12px 10px;
+		display: flex; flex-direction: column;
+	}
+	.ladder-panel h3 {
+		margin: 0 0 6px; text-align: center; font-family: var(--sc-font); font-weight: normal;
+		font-size: 1rem; letter-spacing: .12em; color: var(--red);
+		border-bottom: 1px solid var(--rule); padding-bottom: 4px;
+	}
+	#ladderClose { display: none; margin-bottom: 8px; align-self: center; }
+	#ladder { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+	#ladder li { display: flex; gap: 6px; padding: 1px 6px; font-size: 20px; line-height: 1.1; align-items: baseline; color: var(--ink-soft); }
+	#ladder .mark { width: 1.3em; flex-shrink: 0; text-align: center; }
+	#ladder li.milestone { color: var(--ink); font-weight: bold; }
+	#ladder li.done { color: var(--green); }
+	#ladder li.current { background: var(--ochre); color: var(--ink); font-weight: bold; box-shadow: 1px 1px 0 var(--rule); }
+
+	/* ---------- modal: a notice pinned to the board ---------- */
+	.modal { position: fixed; inset: 0; background: rgba(42,26,12,.62); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 10; }
+	.modal[hidden] { display: none; }
+	.card {
+		width: min(500px, 100%); max-height: 100%; overflow: auto;
+		background: var(--paper-lt) var(--grain); border: 4px double var(--rule);
+		padding: 20px 1rem; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.6), inset 0 0 28px rgba(139,94,40,.3);
+	}
+	.card h2 { margin: 0 0 10px; font-family: var(--display-font); font-weight: normal; letter-spacing: .04em; font-size: 48px; color: var(--red); }
+	.card p { margin: 8px 0; line-height: 1.4; text-align: left; }
+	.card p.big { text-align: center; font-family: var(--sc-font); font-size: 30px; color: var(--red); margin: 6px 0; }
+	.card p.quote { font-size: 32px; text-align: center; font-style: italic; }
+	.card p.quote.small { font-size: 1rem; }
+	.card p.phone, .card p.hint, .card p.center { text-align: center; }
+	.card .hint { font-size: 1rem; color: var(--ink-soft); font-style: italic; }
+	.card .rules { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--rule); font-size: 16px; }
+	.card .buttons { margin-top: 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+	.modal.wide .card { width: min(900px, 100%); }
+	.lookup { border: 3px double var(--rule); background: #fff; height: min(52vh, 460px); }
+	.lookup iframe { width: 100%; height: 100%; border: 0; display: block; }
+	.card a:not(.btn) { color: var(--red); }
+
+	.aud { display: flex; gap: 14px; justify-content: center; align-items: flex-end; height: 150px; margin: 8px 0; }
+	.aud .bar { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 54px; }
+	.aud .fill { display: block; width: 100%; background: repeating-linear-gradient(135deg, var(--rule) 0 3px, #7a5630 3px 6px); border: 1px solid var(--ink); min-height: 2px; transition: height 1s; }
+	.aud .pct { font-size: 1rem; margin-bottom: 3px; }
+	.aud .lt { margin-top: 4px; font-family: var(--sc-font); color: var(--red); font-size: 18px; }
+	.aud .bar.gone { opacity: .35; }
+
+	.amt {
+		color: transparent;
+		border-bottom: 4px solid dimgray;
+		margin-bottom: -4px;
+	}
+
+	.current .amt,
+	.done .amt {
+		color: inherit;
+		border-bottom: none;
+		margin-bottom: 0;
+	}
+
+
+
+	/* ---------- phones ---------- */
+	@media (max-width: 760px) {
+		.answers { grid-template-columns: 1fr; gap: 8px; }
+		.answer .in { min-height: 46px; }
+		.ll { min-width: 58px; height: 58px; font-size: 1rem; }
+		.ll small { font-size: 16px; }
+		.lifelines { gap: 16px; width: 100%;justify-content: space-between; }
+		#ladderToggle { display: inline-block; }
+		.ladder-panel {
+			position: fixed; inset: 0 0 0 auto; width: min(290px, 84vw);
+			transform: translateX(100%); transition: transform .25s; z-index: 5;
+			background: var(--paper-lt);
+		}
+		body.ladder-open .ladder-panel { transform: none; }
+		#ladderClose { display: inline-block; }
+		.hex { padding: 12px 30px; }
+		.masthead h1 { font-size: 22px; }
+	}
+	@media (max-height: 560px) and (orientation: landscape) {
+		.status, .masthead { display: none; }
+		.hex { padding: 8px 30px; font-size: 1rem; }
+		.answer .in { min-height: 36px; padding: 4px 14px; font-size: 15px; }
+		.board { gap: 8px; }
+	}
+</style>
+</head>
+<body>
+
+<div class="stage tokirtland" id="stage">
+	<div class="game">
+		<div class="main">
+			<div class="topbar">
+				<div class="lifelines">
+					<button class="ll" data-ll="fifty" title="Fifty-Fifty: two wrong answers are struck out">50:50</button>
+					<button class="ll" data-ll="phone" title="Telegraph a Friend: they look it up on churchofjesuschrist.org">Telegraph<small>a friend</small></button>
+					<button class="ll" data-ll="audience" title="Ask the Company: a show of hands (pure chance)">Ask<small>the company</small></button>
+					<button class="ll" data-ll="switcher" title="Another Question">Another<small>question</small></button>
+				</div>
+				<div class="topright">
+					<button class="pill" id="ladderToggle" type="button">The Trail</button>
+					<button class="pill" id="walk" type="button">Turn back</button>
+				</div>
+			</div>
+
+			<div class="rule"><span>&#10086;</span></div>
+
+			<div class="status">
+				<div class="leg" id="leg"></div>
+				<div class="prize" id="prize"></div>
+				<div class="qnum" id="qnum"></div>
+			</div>
+
+			<div class="board">
+				<div class="framed hex" id="question"></div>
+
+				<div class="answers" id="answers">
+					<button class="answer" type="button"><span class="in"><span class="ltr">A.</span><span class="txt"></span></span></button>
+					<button class="answer" type="button"><span class="in"><span class="ltr">B.</span><span class="txt"></span></span></button>
+					<button class="answer" type="button"><span class="in"><span class="ltr">C.</span><span class="txt"></span></span></button>
+					<button class="answer" type="button"><span class="in"><span class="ltr">D.</span><span class="txt"></span></span></button>
+				</div>
+
+				<div class="bar-msg" id="confirm" hidden>
+					<span class="q"></span>
+					<button class="btn primary yes" type="button">Final answer</button>
+					<button class="btn no" type="button">No, wait</button>
+				</div>
+
+				<div class="bar-msg result" id="result" hidden>
+					<span class="msg"></span>
+					<button class="btn primary" type="button">Press on</button>
+				</div>
+			</div>
+		</div>
+
+		<aside class="ladder-panel">
+			<button class="pill" id="ladderClose" type="button">Close</button>
+			<h3>The Trail</h3>
+			<ol id="ladder" reversed></ol>
+		</aside>
+	</div>
+</div>
+
+<div class="modal" id="modal" hidden>
+	<div class="card" role="dialog" aria-modal="true">
+		<h2></h2>
+		<div class="body"></div>
+		<div class="buttons"></div>
+	</div>
+</div>
+
+<script src="./quest/js/churchHistoryTrivia.js"></script>
+<script src="./quest/js/quest.js"></script>
+
+</body>
+</html>

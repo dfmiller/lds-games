@@ -1,0 +1,20 @@
+{
+  "name": "play-web-fun",
+  "version": "1.0.0",
+  "description": "A full-screen carousel that highlights a set of apps",
+  "private": true,
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "showcase",
+    "carousel",
+    "pwa"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
