@@ -67,13 +67,14 @@ button:focus-visible{outline:3px solid var(--mine);outline-offset:2px}
 #board canvas{display:block;width:100%;height:100%;touch-action:none}
 #pk{position:fixed;inset:0;background:rgba(8,16,15,.62);display:none;align-items:center;justify-content:center;padding:24px;z-index:25}
 #pk.show{display:flex}
-#pk .box{background:var(--panel);border-radius:16px;padding:22px 18px;max-width:380px;width:100%;max-height:85vh;overflow:auto}
+#pk .box{background:var(--panel);border-radius:16px;padding:22px 18px;max-width:380px;width:100%;max-height:85vh;max-height:85dvh;overflow:hidden;display:flex;flex-direction:column}
+#pk .box>:not(#pg){flex:none}
 #pk h2{margin:0 0 6px;font-size:24px;font-weight:800;text-align:center}
 #pk p{margin:0 0 12px;color:var(--mute);font-size:14px;text-align:center;line-height:1.4}
 #pk a{color:var(--ink)}
-#pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-#pg button{padding:0;border:0;background:var(--peer);border-radius:8px;overflow:hidden;cursor:pointer;aspect-ratio:1;outline-offset:-3px}
-#pg img{width:100%;height:100%;object-fit:cover;display:block}
+#pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start;grid-auto-rows:max-content;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width: none}
+#pg button{padding:0;border:0;background:var(--peer);border-radius:8px;overflow:hidden;cursor:pointer;outline-offset:-3px;display:block;width:100%}
+#pg img{width:100%;aspect-ratio:1;height:auto;object-fit:cover;display:block}
 #pg button.cur{outline:3px solid var(--mine)}
 #pk .box>button{display:block;margin:16px auto 0;border:0;background:var(--btn);color:var(--btnink);font:inherit;font-size:16px;font-weight:600;padding:12px 28px;border-radius:10px;cursor:pointer}
 </style>
@@ -137,7 +138,7 @@ function build(st,im){
   st.pieces=[];
   for(let j=0;j<Y;j++)for(let i=0;i<X;i++)st.pieces.push({i,j,x:0,y:0,s:0});
   st.pieces.sort(()=>Math.random()-.5);
-  arrange(st,false);
+  arrange(st,true);
 }
 function arrange(st,tray){
   const w=1/st.X,h=st.pa/st.Y,TH=st.pa+TRAY;
@@ -146,8 +147,11 @@ function arrange(st,tray){
     p.y=r4(tray?TH-h-rnd(0,Math.max(0,TRAY-h)):rnd(0,Math.max(0,st.pa-h)))});
 }
 function prepare(){
-  if(!S||S.pieces)return true;
-  if(S.err||loadingPath===S.img)return false;
+  if(!S)return true;
+  if(S.err)return false;
+  const have=imgEl&&imgPath===S.img&&imgEl.naturalWidth;
+  if(S.pieces&&have)return true;          // pieces built and image ready
+  if(loadingPath===S.img)return false;    // already loading
   loadingPath=S.img;const st=S;
   loadImg(S.img,im=>{
     loadingPath='';
@@ -155,9 +159,12 @@ function prepare(){
     if(!im){
       const k=FILES.indexOf(st.img);if(k>-1)FILES.splice(k,1);
       if(!FILES.length){st.err=1;toast('No pictures could be loaded.');return}
-      st.img=FILES[Math.max(k,0)%FILES.length];draw();return;
+      st.img=FILES[Math.max(k,0)%FILES.length];
+      st.pieces=null;                      // saved pieces were cut for the old picture
+      draw();return;
     }
-    build(st,im);save();draw();
+    if(!st.pieces)build(st,im);            // only build for a brand-new game
+    save();draw();
   });
   return false;
 }
